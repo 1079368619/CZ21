@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="../js/vue.min.js"></script>
+</head>
+<body>
+<div id="app">
+	<span>{{num1}}</span> + <span>{{num2}}</span> = <span>{{res1}}</span>
+	<div v-pre>
+		你好
+		{{num1}}
+		中国
+	</div>
+	
+	<div>
+		<!--  -->
+		<input v-model.lazy="text">
+		<h3>{{text}}</h3>
+		<input v-model.number="num">
+		<h3>{{num}}</h3>
+		<input v-model.trim="trimstr">
+		<pre>{{trimstr}}</pre>
+		<div>{{trimstr}}</div>
+	</div>
+	
+	<div>
+		<!--  -->
+		<input v-model="text"><br>
+		
+		<!--  -->
+		<input type="radio" value="男" v-model="gender">男
+		<input type="radio" value="女" v-model="gender">女<br>
+		
+		<input type="checkbox" value="1" v-model="likes">电影
+		<input type="checkbox" value="2" v-model="likes">读书
+		<input type="checkbox" value="3" v-model="likes">篮球
+		<input type="checkbox" value="4" v-model="likes">长跑<br>
+		
+		<select>
+			<option>初中</option>
+			<option>高中</option>
+			<option>大专</option>
+			<option>本科</option>
+		</select>
+	</div>
+</div>
+<script type="text/javascript">
+var vue = new Vue({
+	el : "#app",
+	data : {
+		num1 : 100,
+		num2 : 200,
+		text : "demo",
+		
+		gender : '女',
+		
+		likes : [2,3],
+		
+		edu : 1 //
+	},
+	computed : {
+		//
+		res1(){
+			return this.num1+this.num2;
+		}
+	}
+});
+</script>
+</body>
+</html>
