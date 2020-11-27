@@ -67,35 +67,35 @@
      <td class="nav-line"></td> 
     </tr> 
    </tbody> 
-  </table> 
-  <table id="tblCategory" cellspacing="0" cellpadding="2" width="980" align="center" border="0"> 
-   <tbody>
+  </table>
+	<table id="tblCategory" cellspacing="0" cellpadding="2" width="980" align="center" border="0">
+		<tbody>
 			<tr>
 				<td class="bg-fleet">&nbsp;&nbsp;&nbsp; 
-				<a href="/">首页</a> | 
-				<span v-for="c in list">
-					<a href="http://????">{{c.name}}</a> | 
-				</span>
-				<a href="/gp/20181022/41407.htm" target="_blank">[本站教程]</a>
+					<a href="/">首页</a> | 
+					<span v-for="c in list"> 
+						<a href="http://????">{{c.name}}</a> |
+					</span> 
+					<a href="/gp/20181022/41407.htm" target="_blank">[本站教程]</a>
 				</td>
 			</tr>
-		</tbody> 
-  </table> 
-  <script type="text/javascript">
-  var vue1 = new Vue({
-	  el : "#tblCategory",
-	  data :{
-		  list : []
-	  },
-	  created(){
-		  //
-		  axios.get("../queryCategory.s").then(res=>{
-			  //
-			  this.list = res.data;
-		  })
-	  }
-  });
-  </script>
+		</tbody>
+	</table>
+	<script type="text/javascript">
+  	var vue1 = new Vue({
+	  	el : "#tblCategory",
+	  	data :{
+			list : []
+	  	},
+	  	created(){
+			//
+		  	axios.get("../queryCategory.s").then(res=>{
+				//
+			  	this.list = res.data;
+		  	})
+	  	}
+  	});
+  	</script>
   
   <table width="980" align="center"> 
    <tbody>
@@ -123,22 +123,23 @@
   <table cellspacing="0" cellpadding="0" width="980" align="center" border="0"> 
    <tbody> 
     <tr> 
-     <td width="585" valign="top"> <script type="text/javascript">
-						function etabit(btn) {
-							var idname = new String(btn.id);
-							var s = idname.indexOf("_");
-							var e = idname.lastIndexOf("_") + 1;
-							var tabName = idname.substr(0, s);
-							var id = parseInt(idname.substr(e, 1));
-							var tabNumber = btn.parentNode.children.length;
-							for (i = 0; i < tabNumber; i++) {
-								document.getElementById(tabName + "_div_" + i).style.display = "none";
-								document.getElementById(tabName + "_btn_" + i).className = "";
-							}
-							document.getElementById(tabName + "_div_" + id).style.display = "block";
-							btn.className = "curr";
-						};
-					</script> 
+     <td width="585" valign="top"> 
+     <script type="text/javascript">
+     function etabit(btn) {
+    	 var idname = new String(btn.id);
+    	 var s = idname.indexOf("_");
+    	 var e = idname.lastIndexOf("_") + 1;
+    	 var tabName = idname.substr(0, s);
+    	 var id = parseInt(idname.substr(e, 1));
+    	 var tabNumber = btn.parentNode.children.length;
+    	 for (i = 0; i < tabNumber; i++) {
+    		 document.getElementById(tabName + "_div_" + i).style.display = "none";
+    		 document.getElementById(tabName + "_btn_" + i).className = "";
+    	 }
+    	 document.getElementById(tabName + "_div_" + id).style.display = "block";
+    	 btn.className = "curr";
+	};
+	</script> 
       <div id="tl"> 
        <ul id="tab"> 
         <li class="curr" id="tab1_btn_0" onmouseover="etabit(this)">最新电影(点这里)</li> 
@@ -146,14 +147,15 @@
         <li id="tab1_btn_2" onmouseover="etabit(this)">最新高清(点这里)</li> 
        </ul> 
        <div id="tab1_div_0"> 
-        <table cellspacing="0" cellpadding="2" width="100%" align="center" border="0"> 
+       <table cellspacing="0" cellpadding="2" width="100%" align="center" border="0"> 
          <tbody> 
           <tr> 
            <td valign="top"> 
             <table width="100%" border="0" cellspacing="0" cellpadding="0"> 
              <tbody>
-              <tr> 
-               <td width="25%"> 
+              <!-- row是一维数组[0,1,2,3,] -->
+              <tr v-for="row in xh"> 
+               <td v-for="idx in row" width="25%"> 
                 <table width="136" border="0" cellspacing="2" cellpadding="0"> 
                  <tbody>
                   <tr> 
@@ -161,475 +163,65 @@
                     <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
                      <tbody> 
                       <tr> 
-                       <td> <a href="http://www.dygangs.com/bd/20201004/45582.htm" target="_blank"> <img src="https://tu.66vod.net/2018/3456.jpg" border="0" width="120" height="150" alt="碟中谍1-6合集"> </a> </td> 
+                       <td> 
+                        <a href="http://www.dygangs.com/bd/20201004/45582.htm" target="_blank"> 
+                         <img :src="list[idx].poster" border="0" width="120" height="150" alt="碟中谍1-6合集"> 
+                        </a> 
+                       </td> 
                       </tr> 
                      </tbody>
                     </table> 
                     <table border="0" align="center" cellpadding="3" cellspacing="0"> 
                      <tbody> 
                       <tr> 
-                       <td> <a href="http://www.dygangs.com/bd/20201004/45582.htm" target="_blank" class="c2">碟中谍1-6合集</a> </td>
+                       <td> 
+                        <a v-text="list[idx].name" href="http://www.dygangs.com/bd/20201004/45582.htm" target="_blank" class="c2">碟中谍1-6合集</a> 
+                       </td>
                       </tr> 
                      </tbody>
                     </table> 
                     <table border="0" align="center" cellpadding="3" cellspacing="0"> 
                      <tbody> 
                       <tr> 
-                       <td>2020-10-04 </td>
+                       <td>{{list[idx].createDate}} </td>
                       </tr> 
                      </tbody>
                     </table> </td>
                   </tr> 
                  </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/dmq/20200912/45425.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3441.jpg" border="0" width="120" height="150" alt="穿书自救指南"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/dmq/20200912/45425.htm" target="_blank" class="c2">穿书自救指南</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-04 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45579.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3877.jpg" border="0" width="120" height="150" alt="人鱼缚"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45579.htm" target="_blank" class="c2">人鱼缚</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-03 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45578.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3890.jpg" border="0" width="120" height="150" alt="福岛50死士"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45578.htm" target="_blank" class="c2">福岛50死士</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-03 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-              </tr> 
-              <tr> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45577.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3857.jpg" border="0" width="120" height="150" alt="真假天才"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45577.htm" target="_blank" class="c2">真假天才</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-03 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45570.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3301.jpg" border="0" width="120" height="150" alt="东北往事：我叫刘海柱"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45570.htm" target="_blank" class="c2">东北往事：我叫刘</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-03 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45569.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3888.jpg" border="0" width="120" height="150" alt="辉夜大小姐想让我告白：天才们的恋爱头脑战"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45569.htm" target="_blank" class="c2">辉夜大小姐想让我</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-03 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45568.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3860.jpg" border="0" width="120" height="150" alt="临时奶爸"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201003/45568.htm" target="_blank" class="c2">临时奶爸</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-03 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-              </tr> 
-              <tr> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45565.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3848.jpg" border="0" width="120" height="150" alt="科米的规则"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45565.htm" target="_blank" class="c2">科米的规则</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-02 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45564.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3873.jpg" border="0" width="120" height="150" alt="马克思和秘密之房"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45564.htm" target="_blank" class="c2">马克思和秘密之房</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-02 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45563.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3855.jpg" border="0" width="120" height="150" alt="布朗克斯大战吸血鬼"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45563.htm" target="_blank" class="c2">布朗克斯大战吸血</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-02 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45561.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3870.jpg" border="0" width="120" height="150" alt="非常真相"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45561.htm" target="_blank" class="c2">非常真相</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-02 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-              </tr> 
-              <tr> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45560.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3856.jpg" border="0" width="120" height="150" alt="异色国度"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45560.htm" target="_blank" class="c2">异色国度</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-02 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45559.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3851.jpg" border="0" width="120" height="150" alt="沉默的海湾"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201002/45559.htm" target="_blank" class="c2">沉默的海湾</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-02 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201001/45556.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3835.jpg" border="0" width="120" height="150" alt="鬼吹灯之湘西密藏"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201001/45556.htm" target="_blank" class="c2">鬼吹灯之湘西密藏</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-01 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-               <td width="25%"> 
-                <table width="136" border="0" cellspacing="2" cellpadding="0"> 
-                 <tbody>
-                  <tr> 
-                   <td width="132"> 
-                    <table class="border1" cellspacing="0" cellpadding="3" border="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201001/45555.htm" target="_blank"> <img src="https://tu.66vod.net/2020/3795.jpg" border="0" width="120" height="150" alt="纳尔齐斯与歌尔德蒙"> </a> </td> 
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td> <a href="http://www.dygangs.com/ys/20201001/45555.htm" target="_blank" class="c2">纳尔齐斯与歌尔德</a> </td>
-                      </tr> 
-                     </tbody>
-                    </table> 
-                    <table border="0" align="center" cellpadding="3" cellspacing="0"> 
-                     <tbody> 
-                      <tr> 
-                       <td>2020-10-01 </td>
-                      </tr> 
-                     </tbody>
-                    </table> </td>
-                  </tr> 
-                 </tbody>
-                </table> </td> 
-              </tr> 
-             </tbody>
-            </table> </td> 
+                </table> 
+                </td> 
+                
+              </tr>  
+             
+              </tbody>
+            </table> 
+            </td> 
           </tr> 
          </tbody> 
         </table> 
-       </div> 
+       </div>
+       <script type="text/javascript">
+       var vue2 = new Vue({
+    	   el : "#tab1_div_0",
+    	   data : {
+    		   list : [],//
+    		   xh : [[0,1,2,3],[4,5,6,7],[8,9,10,11],[12,13,14,15]]
+    	   },
+    	   created(){
+    		   //axios
+    		   axios.get("../indexYs.s").then(res=>{
+    			   this.list = res.data;
+    		   });
+    	   }
+       });
+       </script>
+       
+       
+       
+       
+       
+        
        <div id="tab1_div_1" class="tbox" style="display: none"> 
         <table cellspacing="0" cellpadding="2" width="100%" align="center" border="0"> 
          <tbody> 

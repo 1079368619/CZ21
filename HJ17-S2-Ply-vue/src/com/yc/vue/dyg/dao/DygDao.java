@@ -30,7 +30,7 @@ public class DygDao {
 	}
 	
 	public List<DygMovie> selectIndexYs() throws SQLException{
-		String sql = "select * from dyg_category";
+		String sql = "select * from dyg_movie where category='ys'";
 		List<DygMovie> list;
 		list = DBHelper.selectList(sql, new ResultSetMapper<DygMovie>(){
 

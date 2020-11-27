@@ -11,7 +11,7 @@ function Game() {
 	this.stepNumber = 0;
 	// 关数
 	this.getIndex = ()=>{return this.maps.index};
-
+  
 	this.next = async function() {
 		this.stepNumber = 0;
 		this.isOver = false;
