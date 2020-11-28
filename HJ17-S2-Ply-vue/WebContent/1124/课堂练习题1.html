@@ -88,17 +88,17 @@
 	</script>
 
 
-	<fieldset id="E04">
+	<fieldset id="E04"  v-for=" hero in heroe">
 		<legend >练习题4: 样式设置</legend>
-		<div >
-			<img height="100px" >{{images}}<br> <span ></span>
+		<div  v-for=" h in hero" style="width:120px;font:center;border:5px solid;">
+			<img height="100px" >{{h.images}}<br> <span >{{h.name}}</span>
 		</div>
-		<div >
-			<img  ><br> <span ></span>
+		<!-- <div>
+			<img><br> <span></span>
 		</div>
-		<div >
-			<img  ><br> <span ></span>
-		</div>
+		<div>
+			<img><br> <span></span>
+		</div> -->
 	</fieldset>
 	<script type="text/javascript">
 	/**
@@ -106,10 +106,15 @@
 	2. 给 div 设置: 宽度120px + 文字居中 + 边框 + 行内块 + 内边距5px
 	3. 给 span 添加英雄名字
 	*/
+	var heroes = { 
+				[name= "吴用" images = "/images/01.jpg"]
+				[name = "卢俊义" images = "/images/02.jpg"]
+				[name = "宋江" images = "/images/03.jpg"]
+	};
 	var vue4 = new Vue({
 		el : "#E04",
 		data : {
-			heroe : []
+			heroe : heroes
 		},
 		methods : {
 			
@@ -138,17 +143,17 @@
 	</style>
 	<fieldset id="E05">
 		<legend>练习题5: class属性</legend>
-		<div id="div1" >
+		<div id="div1" :style="style1">
 			<img width="100px" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3602787553,827902630&fm=26&gp=0.jpg">
-			 <br> 关注样式
+			 <br> 关注样式div1
 		</div>
 		<div id="div2" >
 			<img width="100px" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3602787553,827902630&fm=26&gp=0.jpg">
-			 <br> 关注样式
+			 <br> 关注样式div2
 		</div>
 		<div id="div3" >
 			<img width="100px" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3602787553,827902630&fm=26&gp=0.jpg"> 
-			<br> 关注样式
+			<br> 关注样式div3
 		</div>
 	</fieldset>
 	<script type="text/javascript">
@@ -158,9 +163,9 @@
 	2. 将 .border .text .size 样式应用到 div3 上 ( 计算属性方式)
 	*/
 	var vue5 = new Vue({
-		el : "#E05",
+		el : "#div1",
 		data : {
-			
+			style1 : {.size}
 		},
 		methods : {
 			

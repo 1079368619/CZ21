@@ -113,13 +113,27 @@ textarea{
 
 	<fieldset id="E04">
 		<legend>练习题4: show</legend>
-		<span>用户账号:<input placeholder="用户账号"></span> <span>邮箱地址:<input placeholder="邮箱地址"></span>
-		<button>切换类型</button>
+		<span value="1">用户账号:<input placeholder="用户账号"></span> 
+		<span value="2">邮箱地址:<input placeholder="邮箱地址"></span>
+		<button onclick="change(value)">切换类型</button>
 	</fieldset>
 	<script type="text/javascript">
 	/**
 	1. 实现点击切换按钮, 显示不同的span
 	*/
+	var vue4 = new Vue({
+		el : "#E04",
+		data : {
+			
+		},
+		created(){
+			change(value){
+				if(e == 1){
+					e = 2;
+				}
+			}
+		}
+	}); 
 	</script>
 
 	<fieldset id="E05">
@@ -144,14 +158,14 @@ textarea{
 					<button @click="addP(h, 1)">+</button>
 				</td>
 				<td>
-					<button>-</button>
+					<button @click="addP(h, -1)">-</button>
 					{{h.i}}
-					<button>+</button>
+					<button @click="addP(h, 1)">+</button>
 				</td>
 				<td>
-					<button>-</button>
+					<button @click="addP(h, -1)">-</button>
 					{{h.a}}
-					<button>+</button>
+					<button @click="addP(h, 1)">+</button>
 				</td>
 				<td>{{h.p + h.i + h.a}}</td>
 			</tr>
@@ -193,16 +207,16 @@ textarea{
 	<fieldset id="E06">
 		<legend>练习题6: 表单元素绑定</legend>
 		<form action="">
-			姓名:<input  name="name"><br>
-			绰号:<input  name="alias"><br>
-			学历:<select  name="edu"><option ></select><br>
-			职位:<span >
-					<input  name="job" type="radio">
+			姓名:<input  name="name" v-model="s.name"><br>
+			绰号:<input  name="alias" v-model="s.alias"><br>
+			学历:<select  name="edu" v-model="edu"><option></select><br>
+			职位:<span  v-model="job">
+					<input  name="job" type="radio" v-for="job">
 				</span><br>
-			爱好:<span >
-					<input  name="like" type="checkbox">
+			爱好:<span v-model="like">
+					<input name="like" type="checkbox" >
 				</span><br>
-			介绍:<textarea  name="desc"></textarea><br>
+			介绍:<textarea  name="desc" v-model="s.desc"></textarea><br>
 		</form>
 	</fieldset>
 	<script type="text/javascript">
@@ -222,7 +236,15 @@ textarea{
 	1. 学历, 职位, 爱好的选项添加到对应的控件中
 	2. 将宋江的个人信息绑定到表单的对应元素中
 	*/
-	
+	var vue6 = new Vue({
+		el : "#E06",
+		data : {
+			s : sj,
+			edu : eduItems,
+			job : jobItems,
+			like : likeItems
+		}
+	});
 	</script>
 </body>
 </html>
