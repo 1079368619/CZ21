@@ -28,6 +28,10 @@ ol,li,{
 			vue.game.down();/*游戏下移*/
 		}
 		// 判断当前关结束就进入下一关
+		if(vue.$data.game.youWin()){
+			alert("你赢了，共用了" + vue.$data.game.getStepNumber() + "步");
+			vue.$data.game.next()
+		}
 	}
 </script>
 </head>

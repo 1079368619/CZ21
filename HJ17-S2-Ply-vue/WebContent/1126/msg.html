@@ -19,7 +19,7 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="0" class="position"> 
        <tbody>
         <tr> 
-         <td>现在的位置：<a href="http://www.dygang.com/">首页</a>&nbsp;&gt;&nbsp;留言板</td> 
+         <td>现在的位置：<a href="index.html">首页</a>&nbsp;&gt;&nbsp;留言板</td> 
         </tr> 
        </tbody>
       </table>
@@ -150,6 +150,7 @@
             	  methods : {
             		  addMsg(){
             			  var params = new URLSearchParams();
+            			  params.append("op","add");
             			  params.append("name",this.msg.name);
             			  params.append("email",this.msg.email);
             			  params.append("content",this.msg.content);

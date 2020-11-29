@@ -12,12 +12,12 @@ import com.yc.vue.dyg.biz.BizException;
 import com.yc.vue.dyg.biz.DygBiz;
 
 @WebServlet("/addMsg.s")
-public class AddMsgServlet extends HttpServlet {
+public class AddMsgServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
     
 	private DygBiz biz = new DygBiz();
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html;charset=utf-8");
 		//
 		DygMsg msg = new DygMsg();
@@ -37,9 +37,8 @@ public class AddMsgServlet extends HttpServlet {
 		//
 		
 	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
-
+	/*
+	 * protected void doPost(HttpServletRequest request, HttpServletResponse
+	 * response) throws ServletException, IOException { doGet(request, response); }
+	 */
 }

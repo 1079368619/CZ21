@@ -20,16 +20,16 @@
 	<br>
 	
 	<h3>使用 post 请求进行计算 </h3>
-	<input>
-	<select>
+	<input v-model="a2">
+	<select v-model="ProductActive"  @change="changeProduct($event)">
 		<option value="1">+</option>
 		<option value="2">-</option>
 		<option value="3">*</option>
 		<option value="4">/</option>
 		<option value="5">%</option>
 	</select> 
-	<input> = <input>
-	<button>计算</button>
+	<input v-model="b2"> = <input v-model="result2">
+	<button v-on:click="computes(ProductActive)">计算</button>
 	
 </div>
 <script type="text/javascript">
@@ -42,7 +42,12 @@
 			
 			a1 : 0,
 			b1 : 0,
-			result1 : 0
+			result1 : 0,
+			
+			a2 : 0,
+			b2 : 0,
+			result2 : 0,
+			ProductActive : "1"
 		},
 		methods : {
 			add(){
@@ -72,6 +77,38 @@
 				axios.post("../math.s",params).then(function(res){
 					vue.result1 = res.data;
 				})
+			},
+			changeProduct(event) {
+	             this.ProductActive = event.target.value; //获取option对应的value值
+	             console.info("你选中了",this.ProductActive);
+	        },
+	        computes(ProductActive){
+				var params = new URLSearchParams();// URLSearchParams 用于封装 post 请求参数
+				params.append("a",this.a2);
+				params.append("b",this.b2);
+				if(ProductActive == 1){
+					axios.post("../add.s",params).then(function(res){
+						vue.result2 = res.data;
+					})
+				}else if(ProductActive == 2){
+					axios.post("../math.s",params).then(function(res){
+						vue.result2 = res.data;
+					})
+				}else if(ProductActive == 3){
+					axios.post("../mul.s",params).then(function(res){
+						vue.result2 = res.data;
+					})
+				}else if(ProductActive == 4){
+					axios.post("../div.s",params).then(function(res){
+						vue.result2 = res.data;
+					})
+				}else if(ProductActive == 5){
+					axios.post("../quyu.s",params).then(function(res){
+						vue.result2 = res.data;
+					})
+				}else{
+					alert("操作错误！！！");
+				}
 			}
 		}
 	});
