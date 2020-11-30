@@ -1,6 +1,7 @@
 package com.yc.damai.po;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class Product implements Serializable {
 
@@ -13,9 +14,8 @@ public class Product implements Serializable {
 	private String image;
 	private String pdesc;
 	private Integer isHot;
-	private String pdate;
+	private Timestamp pdate;
 	private Integer csid;
-	
 	public Integer getPid() {
 		return pid;
 	}
@@ -58,10 +58,10 @@ public class Product implements Serializable {
 	public void setIsHot(Integer isHot) {
 		this.isHot = isHot;
 	}
-	public String getPdate() {
+	public Timestamp getPdate() {
 		return pdate;
 	}
-	public void setPdate(String pdate) {
+	public void setPdate(Timestamp pdate) {
 		this.pdate = pdate;
 	}
 	public Integer getCsid() {
@@ -70,7 +70,6 @@ public class Product implements Serializable {
 	public void setCsid(Integer csid) {
 		this.csid = csid;
 	}
-	
 	
 	
 }

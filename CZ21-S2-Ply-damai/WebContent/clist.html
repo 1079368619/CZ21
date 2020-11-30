@@ -5,6 +5,11 @@
 <title>大麦商城</title>
 <link href="css/common.css" rel="stylesheet" type="text/css"/>
 <link href="css/product.css" rel="stylesheet" type="text/css"/>
+
+<!-- 引入vue和axios -->
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+
 </head>
 <body>
 <div class="container header">
@@ -20,7 +25,7 @@
 <div class="headerAd">
 	<img src="image/header.jpg" width="320" height="50" alt="正品保障" title="正品保障"/>
 </div>	</div>
-<div class="span10 last">
+	<div class="span10 last">
 		<div class="topNav clearfix">
 			<ul>
 				
@@ -65,57 +70,25 @@
 
 	
 
-<div class="span24">
+	<div id="querycg" class="span24">
 		<ul class="mainNav">
-					<li>
-						<a href="index.html">首页</a>
-						|
-					</li>
-					
-					<li>
-<a href="clist.html?1&pageIndex=1">
-					女装男装
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?2&pageIndex=1">
-					鞋靴箱包
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?3&pageIndex=1">
-					运动户外
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?4&pageIndex=1">
-					珠宝配饰
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?5&pageIndex=1">
-					手机数码
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?6&pageIndex=1">
-					家电办公
-</a>
-					|</li>
-					
-					<li>
-<a href="clist.html?7&pageIndex=1">
-					护肤彩妆
-</a>
-					|</li>
-							
+				<li><a href="index.html">首页</a> |</li>
+				<li v-for=" lc in listc "><a :href="'clist.html#' + lc.cid + '&pageIndex=1'"> {{lc.cname}}</a> |</li>
 		</ul>
 	</div>
+	<script type="text/javascript">
+	var vue3 = new Vue({
+		el : "#querycg",
+		data : {
+			listc : []
+		},
+		created(){
+			axios.get("category.s?op=queryCategory").then(res=>{
+				this.listc = res.data;
+			})
+		}
+	});
+	</script>
 
 
 </div>
@@ -314,8 +287,21 @@
 							
 						</dl>
 			
+			</div>
+			<script type="text/javascript">
+			var vue1 = new Vue({
+				el : ".hotProductCategory",
+				data : {
+					listc : []
+				},
+				created(){
+					axios.get("category.s?op=queryCategory").then(res=>{
+						this.listc = res.data;
+					})
+				}
+			});
+			</script>
 		</div>
-</div>
 		
 		<div class="span18 last">
 			
@@ -329,188 +315,37 @@
 				<div id="result" class="result table clearfix">
 						<ul>
 						
-						<li>
-										<a href="detail.html?1">
-											<img src="products/1/cs10001.jpg" width="170" height="170"  style="display: inline-block;"/>
+						<li v-for=" cp in cplist ">
+										<a :href="'detail.html?' + cp.pid">
+											<img :src="cp.image" width="170" height="170"  style="display: inline-block;"/>
 											   
 											<span style='color:green'>
-											 韩版连帽加厚毛衣女外套
+											 {{cp.pname}}
 											</span>
 											 
 											<span class="price">
-												商城价： ￥228.0/份
+												商城价： ￥{{cp.shopPrice}}/份
 											</span>
 											 
 										</a>
 									</li>
 						
-						<li>
-										<a href="detail.html?2">
-											<img src="products/1/cs10002.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 女装立领长袖拼接PU皮毛呢外套
-											</span>
-											 
-											<span class="price">
-												商城价： ￥172.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?3">
-											<img src="products/1/cs10003.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 韩版女装翻领羔绒夹棉格子毛呢外套
-											</span>
-											 
-											<span class="price">
-												商城价： ￥119.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?4">
-											<img src="products/1/cs10004.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 韩版女装翻领羔绒夹棉格子毛呢外套
-											</span>
-											 
-											<span class="price">
-												商城价： ￥119.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?5">
-											<img src="products/1/cs10005.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 韩版女装翻领羔绒夹棉格子毛呢外套
-											</span>
-											 
-											<span class="price">
-												商城价： ￥119.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?6">
-											<img src="products/1/cs10006.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 冬装韩版女装翻领羔绒夹棉格子毛呢外套
-											</span>
-											 
-											<span class="price">
-												商城价： ￥119.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?7">
-											<img src="products/1/cs10007.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 新款优雅奢华毛领白鸭绒轻薄羽绒服
-											</span>
-											 
-											<span class="price">
-												商城价： ￥590.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?8">
-											<img src="products/1/cs10008.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 秋冬季毛呢外套女中长款圆领小香风呢子大衣
-											</span>
-											 
-											<span class="price">
-												商城价： ￥336.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?9">
-											<img src="products/1/cs10009.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 女装貉子毛大衣 时尚修身长袖淑女毛呢外套
-											</span>
-											 
-											<span class="price">
-												商城价： ￥119.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?10">
-											<img src="products/1/cs10010.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 修身显瘦淑女针织长袖打底连衣裙女
-											</span>
-											 
-											<span class="price">
-												商城价： ￥158.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?72">
-											<img src="products/1/cs10011.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 冬季新款大码女装修身加厚棉打底连衣裙女
-											</span>
-											 
-											<span class="price">
-												商城价： ￥125.0/份
-											</span>
-											 
-										</a>
-									</li>
-						
-						<li>
-										<a href="detail.html?11">
-											<img src="products/1/cs20001.jpg" width="170" height="170"  style="display: inline-block;"/>
-											   
-											<span style='color:green'>
-											 整貂皮大衣外套中长款收腰立领长袖进口真皮草裘皮
-											</span>
-											 
-											<span class="price">
-												商城价： ￥9900.0/份
-											</span>
-											 
-										</a>
-									</li>
 						
 						</ul>
 				</div>
+				<script type="text/javascript">
+				var vue2 = new Vue({
+					el : "#result",
+					data : {
+						cplist : []
+					},
+					created(){
+						axios.get("product.s?op=queryByCid&cid=" + location.hash.substring(1)).then(res=>{
+							this.cplist = res.data;
+						})
+					}
+				});
+				</script>
 	
 	<div class="pagination">
 	第1/6

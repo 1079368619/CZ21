@@ -2,7 +2,7 @@ package com.yc.damai.po;
 
 import java.io.Serializable;
 
-public class Categorysecond implements Serializable {
+public class CategorySecond implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
