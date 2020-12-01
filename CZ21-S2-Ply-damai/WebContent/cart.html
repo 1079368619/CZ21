@@ -8,6 +8,10 @@
 <script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript" src="js/common.js"></script>
 
+<!-- 引入vue和axios -->
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+
 </head>
 <body>
 <div class="container header">
@@ -119,15 +123,13 @@
 	</div>
 
 
-</div>	<div class="container cart">
-		<div class="span24">
-		
-		
-		<div class="step step1">
-				购物车列表
-			</div>
-				<table>
-					<tbody><tr>
+</div>	
+	<div class="container cart">
+		<div id="cart" class="span24">
+			<div class="step step1">购物车列表</div>
+			<table>
+				<tbody>
+					<tr>
 						<th>图片</th>
 						<th>商品</th>
 						<th>价格</th>
@@ -135,110 +137,58 @@
 						<th>小计</th>
 						<th>操作</th>
 					</tr>
-					
-						<tr>
-							<td width="60">
-								<img src="products/1/cs10001.jpg">
-							</td>
-							<td>
-								<a target="_blank">韩版连帽加厚毛衣女外套</a>
-							</td>
-							<td>
-								￥228.0
-							</td>
-							<td class="quantity" width="60">
-								1
-							</td>
-							<td width="140">
-								<span class="subtotal">￥228.0</span>
-							</td>
-							<td>
-								<a href="cart.html?pid=1" class="delete">删除</a>
-							</td>
-						</tr>
+					<tr v-for=" c in clist">
+						<td width="60">
+							<img :src="c.image">
+						</td>
+						<td>
+							<a target="_blank">{{c.pname}}</a>
+						</td>
+						<td>￥{{c.shopPrice}}</td>
+						<td class="quantity" width="60">{{c.count}}</td>
+						<td width="140">
+							<span class="subtotal">￥{{c.count * c.shopPrice}}</span>
+						</td>
+						<td>
+							<a :href="'cart.html?pid=' + c.pid" class="delete" @click="deleteOne(c.pid)">删除</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 				
-						<tr>
-							<td width="60">
-								<img src="products/1/cs60003.png">
-							</td>
-							<td>
-								<a target="_blank">商务修身羊毛呢子风衣 中长款呢大衣外套</a>
-							</td>
-							<td>
-								￥299.0
-							</td>
-							<td class="quantity" width="60">
-								1
-							</td>
-							<td width="140">
-								<span class="subtotal">￥299.0</span>
-							</td>
-							<td>
-								<a href="cart.html?pid=54" class="delete">删除</a>
-							</td>
-						</tr>
-				
-						<tr>
-							<td width="60">
-								<img src="products/1/cs10007.jpg">
-							</td>
-							<td>
-								<a target="_blank">新款优雅奢华毛领白鸭绒轻薄羽绒服</a>
-							</td>
-							<td>
-								￥590.0
-							</td>
-							<td class="quantity" width="60">
-								1
-							</td>
-							<td width="140">
-								<span class="subtotal">￥590.0</span>
-							</td>
-							<td>
-								<a href="cart.html?pid=7" class="delete">删除</a>
-							</td>
-						</tr>
-				
-						<tr>
-							<td width="60">
-								<img src="products/1/cs20004.jpg">
-							</td>
-							<td>
-								<a target="_blank">整貂皮大衣外套中长款收腰立领长袖进口真皮草裘皮</a>
-							</td>
-							<td>
-								￥9900.0
-							</td>
-							<td class="quantity" width="60">
-								1
-							</td>
-							<td width="140">
-								<span class="subtotal">￥9900.0</span>
-							</td>
-							<td>
-								<a href="cart.html?pid=14" class="delete">删除</a>
-							</td>
-						</tr>
-				
-				</tbody></table>
-				
-				<dl id="giftItems" class="hidden" style="display: none;">
-				</dl>
-				<div class="total">
-					<em id="promotion"></em>
-							<em>
-								登录后确认是否享有优惠
-							</em>
-					赠送积分: <em id="effectivePoint">11017.0</em>
-					商品金额: <strong id="effectivePrice">11017.0</strong>
-				</div>
-				<div class="bottom">
-					<a href="cart.html" id="clear" class="clear">清空购物车</a>
-					<a href="pay.html" id="submit" class="submit">提交订单</a>
-				</div>
-			
+			<dl id="giftItems" class="hidden" style="display: none;">
+			</dl>
+			<div class="total">
+				<em id="promotion"></em>
+				<em>登录后确认是否享有优惠</em>
+				赠送积分: <em id="effectivePoint">11017.0</em>
+				商品金额: <strong id="effectivePrice">11017.0</strong>
+			</div>
+			<div class="bottom">
+				<a href="cart.html" id="clear" class="clear">清空购物车</a>
+				<a href="pay.html" id="submit" class="submit">提交订单</a>
+			</div>
 		</div>
+		<script type="text/javascript">
+		var vue1 = new Vue({
+			el : "#cart",
+			data : {
+				clist : []
+			},
+			created(){
+				axios.get("cart.s?op=queryByUid").then(res=>{
+					this.clist = res.data;
+				});
+			},
+			methods : {
+				deleteOne(pid){
+					
+				}
+			}
+		});
+		</script>
 	</div>
+	
 <div class="container footer">
 	<div class="span24">
 		<div class="footerAd">

@@ -384,7 +384,7 @@
 						<dd>件</dd>
 					</dl>
 					<div class="buy">
-						<input id="addCart" class="addCart" value="加入购物车" type="submit">
+						<input @click="addCart(list.pid)" id="addCart" class="addCart" value="加入购物车" type="button">
 					</div>
 				</form>
 			</div>
@@ -416,6 +416,33 @@
 				axios.get("product.s?op=queryByPid&pid=" + location.hash.substring(1)).then(res=>{
 					this.list = res.data;
 				});
+			},
+			methods : {
+				addCart(){
+					//判断用户是否登录
+					//未完待续...
+					axios.get("user.s?op=getLoginedUser").then(res=>{
+						//data存在并且data.uid也有值
+						if(res.data && res.data.uid){
+							var params = new URLSearchParams();
+		        			params.append("pid",this.list.pid);
+		        			params.append("count",this.$refs.counts.value);
+		        			params.append("op","addCart");
+							axios.post("cart.s", params).then(res=>{
+		        				if(res.data.code == 1){
+		        					//跳转到购物车页面
+			            			location.href="cart.html";
+		        				} else{
+		        					alert(res.data.msg);
+		        				}
+		        			});
+						} else{
+							alert("您尚未登录");
+							location.href="login.html";
+						}
+					});
+					
+				}
 			}
 		});
 		</script>

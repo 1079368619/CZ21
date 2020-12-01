@@ -3,7 +3,9 @@ package com.yc.damai.util;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.catalina.tribes.util.Arrays;
@@ -113,6 +115,13 @@ public class DBHelper {
 		T map(ResultSet rs) throws SQLException;
 	}
 	
+	/**
+	 * 
+	 * @param sql
+	 * @param params
+	 * @return int 返回当前SQL影响的行数
+	 * @throws SQLException
+	 */
 	public static int update(String sql, Object...params)throws SQLException {
 		System.out.println("SQL：" + sql);
 		System.out.println("参数：" + Arrays.toString(params));
@@ -128,6 +137,24 @@ public class DBHelper {
 		} finally {
 			conn.close();
 		}
+	}
+
+	public static List<Map<String, Object>> selectListMap(String sql, Object...params)throws SQLException {
+		return selectList(sql, new ResultSetMapper<Map<String, Object>>() {
+
+			@Override
+			public Map<String, Object> map(ResultSet rs) throws SQLException {
+				Map<String, Object> map = new HashMap<String, Object>();
+				ResultSetMetaData md = rs.getMetaData();
+				for(int i=0; i<md.getColumnCount(); i++) {
+					String columnName = md.getColumnName(i + 1);
+					Object value = rs.getObject(columnName);
+					map.put(columnName, value);
+				}
+				return map;
+			}
+			
+		}, params);
 	}
 
 }

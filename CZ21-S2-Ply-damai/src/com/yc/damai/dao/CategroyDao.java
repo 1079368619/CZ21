@@ -25,7 +25,7 @@ public class CategroyDao {
 	}
 	
 	
-	public List<Category> queryCategory(){
+	public List<Category> queryAll(){
 		String sql = "select * from category";
 		try {
 			return DBHelper.selectList(sql, cm);

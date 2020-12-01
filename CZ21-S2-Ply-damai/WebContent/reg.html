@@ -3,12 +3,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>大麦商城</title>
-<link href="css/common.css"
-	rel="stylesheet" type="text/css" />
-<link href="css/register.css"
-	rel="stylesheet" type="text/css" />
-<script type="text/javascript"
-	src="js/jquery-1.8.3.js"></script>
+<link href="css/common.css" rel="stylesheet" type="text/css" />
+<link href="css/register.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+
+<!-- 引入vue和axios -->
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+
 <script type="text/javascript">
 	function checkForm(){
 		// 校验用户名:
@@ -22,8 +24,21 @@
 	}
 	
 	//校验用户名是否存在
-	function checkUserName(){
-		// ajax 验证用户名是否存在
+	function checkUserName(username){
+		/* // ajax 验证用户名是否存在
+		$(function(){
+	          $("#userName").change(function(){
+	             var val=$(this).val();
+	              val=$.trim(val);
+	                 if(val !=""){
+	                   var url="/MyCommunity/ValidateUserName";    
+	                   var args={"userName":val,"time":new Date()};
+	                   $.post(url,args,function(data){
+	                      $("#message").html(data);
+	                   });
+	                 }
+	          });
+	      }); */
 	}
 	function changeImg(){
 		// 更新验证码
@@ -144,83 +159,86 @@
 	<div class="container register">
 		<div class="span24">
 			<div class="wrap">
-				<div class="main clearfix">
+				<div id="regit" class="main clearfix">
 					<div class="title">
 						<strong>会员注册</strong>USER REGISTER
-
 					</div>
-					<form id="registerForm"
-						action="reg.html"
-						method="post" novalidate="novalidate"
-						onsubmit="return checkForm();">
+					<form id="registerForm" action="reg.html" method="post" novalidate="novalidate" onsubmit="return checkForm();">
 						<table>
 							<tbody>
 								<tr>
 									<th><span class="requiredField">*</span>用户名:</th>
-									<td><input type="text" id="username" name="username"
-										class="text" maxlength="20" onblur="checkUserName()" /><span
-										id="span1">
-									</span></td>
+									<td>
+										<input v-model="username" type="text" id="username" name="username" class="text" maxlength="20" onblur="checkUserName()" />
+										<span id="span1"></span>
+									</td>
 								</tr>
 								<tr>
 									<th><span class="requiredField">*</span>密&nbsp;&nbsp;码:</th>
-									<td><input type="password" id="password" name="password"
-										class="text" maxlength="20" autocomplete="off" /><span>
-									</span></td>
+									<td>
+										<input v-model="password" type="password" id="password" name="password" class="text" maxlength="20" autocomplete="off" />
+										<span></span>
+									</td>
 								</tr>
 								<tr>
 									<th><span class="requiredField">*</span>确认密码:</th>
-									<td><input type="password" id="repassword"
-										name="repassword" class="text" maxlength="20"
-										autocomplete="off" /></td>
+									<td>
+										<input v-model="repassword" type="password" id="repassword" name="repassword" class="text" maxlength="20" autocomplete="off" />
+									</td>
 								</tr>
 								<tr>
 									<th><span class="requiredField">*</span>E-mail:</th>
-									<td><input type="text" id="email" name="email"
-										class="text" maxlength="200" /><span>
-									</span></td>
+									<td>
+										<input v-model="email" type="text" id="email" name="email"class="text" maxlength="200" />
+										<span></span>
+									</td>
 								</tr>
 								<tr>
 									<th><span class="requiredField">*</span>电话:</th>
-									<td><input type="text" id="phone" name="phone"
-										class="text" maxlength="200" onkeyup="value=value.replace(/[^\d]/g,'')" onafterpaste="value=value.replace(/\D/g,'')">
+									<td>
+										<input v-model="phone" type="text" id="phone" name="phone" class="text" maxlength="200" onkeyup="value=value.replace(/[^\d]/g,'')" onafterpaste="value=value.replace(/\D/g,'')">
 									</td>
 								</tr>
 								<tr>
 									<th>姓名:</th>
-									<td><input type="text" name="name" class="text"
-										maxlength="200">
+									<td>
+										<input v-model="name" type="text" name="name" class="text" maxlength="200">
 									</td>
 								</tr>
 								<tr>
 									<th>性别:</th>
-									<td><span class="fieldSet"> <label> <input
-												type="radio" name="sex" value="男">男 
-										</label> <label> <input type="radio" name="sex" value="女">女
-											
-										</label> </span></td>
+									<td>
+										<span class="fieldSet"> 
+											<label> 
+												<input v-model="sex" type="radio" name="sex" value="男" checked="true">男 
+											</label> 
+											<label> 
+												<input v-model="sex" type="radio" name="sex" value="女">女
+											</label> 
+										</span>
+									</td>
 								</tr>
 
 
-								<!-- <tr>
+								<tr>
 									<th>地址:</th>
-									<td><input type="text" name="address" class="text"
-										maxlength="200">
+									<td>
+										<input v-model="addr" type="text" name="address" class="text" maxlength="200">
+									</td>
+								</tr>
+								<!-- <tr>
+									<th><span class="requiredField">*</span>验证码:</th>
+									<td>
+										<span class="fieldSet"> 
+											<input type="text" id="captcha" name="captcha" class="text captcha" maxlength="4" autocomplete="off">
+											<img id="captchaImage" class="captchaImage" src="images/vcode.jpg" title="点击更换验证码" onclick="changeImg()">
+										</span>
 									</td>
 								</tr> -->
 								<tr>
-									<th><span class="requiredField">*</span>验证码:</th>
-									<td><span class="fieldSet"> <input type="text"
-											id="captcha" name="captcha" class="text captcha"
-											maxlength="4" autocomplete="off"><img
-												id="captchaImage" class="captchaImage"
-												src="images/vcode.jpg"
-												title="点击更换验证码" onclick="changeImg()">
-									</span></td>
-								</tr>
-								<tr>
 									<th>&nbsp;</th>
-									<td><input type="submit" class="submit" value="同意以下协议并注册">
+									<td>
+										<input type="button" @click="reg" class="submit" value="同意以下协议并注册">
 									</td>
 								</tr>
 								<tr>
@@ -288,7 +306,8 @@
 											<p>
 												十四、法律<br>本协议的订立、执行和解释及争议的解决均应适用中华人民共和国的法律。用户和本网站一致同意服从本网站所在地有管辖权的法院管辖。如发生本网站服务条款与中华人民共和国法律相抵触时，则这些条款将完全按法律规定重新解释，而其它条款则依旧保持对用户的约束力。
 											</p>
-										</div></td>
+										</div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -310,6 +329,42 @@
 						</div>
 					</form>
 				</div>
+				<script type="text/javascript">
+				var vue1 = new Vue({
+					el : "#regit",
+					data : {
+						username : "",
+						password : "",
+						repassword : "",
+						email : "",
+						phone : "",
+						name : "",
+						sex : "",
+						addr : "",
+						vcode : ""
+					},
+					methods : {
+	            		reg(){
+	            			var params = new URLSearchParams();
+	            			params.append("username",this.username);
+	            			params.append("password",this.password);
+	            			params.append("repassword",this.repassword);
+	            			params.append("email",this.email);
+	            			params.append("phone",this.phone);
+	            			params.append("name",this.name);
+	            			params.append("sex",this.sex);
+	            			params.append("addr",this.addr);
+	            			params.append("op","reg");
+	            			axios.post("user.s", params).then(res=>{
+	            				alert(res.data);
+	            				if(res.data == "注册成功"){
+	    	            			location.href="login.html";
+	            				}
+	            			});
+	            		}
+	            	}
+				});
+				</script>
 			</div>
 		</div>
 	</div>
@@ -339,9 +394,9 @@
 	</div>
 	<div id="_my97DP"
 		style="position: absolute; top: -1970px; left: -1970px;">
-		<iframe style="width: 190px; height: 191px;"
+		<!-- <iframe style="width: 190px; height: 191px;"
 			src="./会员注册 - Powered By Mango Team_files/My97DatePicker.htm"
-			frameborder="0" border="0" scrolling="no"></iframe>
+			frameborder="0" border="0" scrolling="no"></iframe> -->
 	</div>
 </body>
 </html>

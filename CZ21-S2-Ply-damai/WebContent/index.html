@@ -65,7 +65,7 @@
 	<div id="querycg" class="span24">
 		<ul class="mainNav" >
 			<li><a href="index.html">首页</a> |</li>
-			<li v-for=" lc in listc "><a :href="'clist.html#' + lc.cid + '&pageIndex=1'"> {{lc.cname}}</a> |</li>
+			<li v-for=" lc in listc "><a :href="'clist.html?cid=' + lc.cid +'#'+lc.cid + '&pageIndex=1'">{{lc.cname}}</a> |</li>
 		</ul>
 	</div>
 	<script type="text/javascript">
@@ -75,7 +75,7 @@
 			listc : []
 		},
 		created(){
-			axios.get("category.s?op=queryCategory").then(res=>{
+			axios.get("category.s?op=queryAll").then(res=>{
 				this.listc = res.data;
 			})
 		}

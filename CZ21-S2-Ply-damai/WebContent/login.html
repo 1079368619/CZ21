@@ -5,6 +5,11 @@
 <title>大麦商城</title>
 <link href="css/common.css" rel="stylesheet" type="text/css"/>
 <link href="css/login.css" rel="stylesheet" type="text/css"/>
+
+<!-- 引入vue和axios -->
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+
 <script type="text/javascript">
 	function checkImg(){
 		// 更新验证码
@@ -141,25 +146,19 @@
 					<form id="loginForm" action="login.html"  method="post" novalidate="novalidate">
 						<table>
 							<tbody><tr>
-								<th>
-										用户名:
-								</th>
+								<th>用户名:</th>
 								<td>
-									<input type="text" id="username" name="username" class="text" maxlength="20"/><span></span>
+									<input v-model="username" type="text" id="username" name="username" class="text" maxlength="20"/><span></span>
 								</td>
 							</tr>
 							<tr>
-								<th>
-									密&nbsp;&nbsp;码:
-								</th>
+								<th>密&nbsp;&nbsp;码:</th>
 								<td>
-									<input type="password" id="password" name="password" class="text" maxlength="20" autocomplete="off"/><span></span>
+									<input v-model="password" type="password" id="password" name="password" class="text" maxlength="20" autocomplete="off"/><span></span>
 								</td>
 							</tr>
 								<tr>
-									<th>
-										验证码:
-									</th>
+									<th>验证码:</th>
 									<td>
 										<span class="fieldSet">
 											<input type="text" id="captcha" name="captcha" class="text captcha" maxlength="4" autocomplete="off"><img id="captchaImage" class="captchaImage" src="images/vcode.jpg" title="点击更换验证码" onclick="checkImg()">
@@ -167,9 +166,7 @@
 									</td>
 								</tr>
 							<tr>
-								<th>&nbsp;
-									
-								</th>
+								<th>&nbsp;</th>
 								<td>
 									<label>
 										<input type="checkbox" id="isRememberUsername" name="isRememberUsername" value="true">记住用户名
@@ -180,17 +177,13 @@
 								</td>
 							</tr>
 							<tr>
-								<th>&nbsp;
-									
-								</th>
+								<th>&nbsp;</th>
 								<td>
-									<input type="submit" class="submit" value="登 录">
+									<input @click="login" type="button" class="submit" value="登 录">
 								</td>
 							</tr>
 							<tr class="register">
-								<th>&nbsp;
-									
-								</th>
+								<th>&nbsp;</th>
 								<td>
 									<dl>
 										<dt>还没有注册账号？</dt>
@@ -203,6 +196,35 @@
 							</tr>
 						</tbody></table>
 					</form>
+					<script type="text/javascript">
+					var vue1 = new Vue({
+						el : "#loginForm",
+						data : {
+							username : "",
+							password : "",
+							
+						},
+						methods : {
+							login(){
+								var params = new URLSearchParams();
+		            			params.append("username",this.username);
+		            			params.append("password",this.password);
+		            			params.append("op","login");
+								axios.post("user.s", params).then(res=>{
+		            				alert(res.data.msg);
+		            				//后续操作： 如果成功，跳转首页；如果失败，显示报错信息
+		            				if(res.data.code == 1){
+		    	            			location.href="index.html";
+		            				}
+		            				//登录成功之后，在页面显示当前登录的用户昵称...
+		            			}).catch(error=>{
+		            				//reject表示系统的错误（程序的bug）
+		            				alert("系统错误，请联系管理员！")
+		            			});
+							}
+						}
+					});
+					</script>
 				</div>
 			</div>
 		</div>

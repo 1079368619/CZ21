@@ -64,7 +64,7 @@ public class ProductDao {
 	}
 	
 	public List<Product> queryByCsid(String cid){
-		String sql = "select * from product where csid = ?";
+		String sql = "select a.* from product a, categorysecond b where a.csid = b.csid and b.cid = ?";
 		try {
 			return DBHelper.selectList(sql, pm, cid);
 		} catch (SQLException e) {
