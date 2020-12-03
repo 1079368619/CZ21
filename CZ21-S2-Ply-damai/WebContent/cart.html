@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>大麦商城</title>
+<link href="css/common.css" rel="stylesheet" type="text/css">
+<link href="css/cart.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+
+<!-- 引入vue和axios -->
+<script type="text/javascript" src="js/vue.min.js"></script>
+<script type="text/javascript" src="js/axios.min.js"></script>
+
+</head>
+<body>
+<div class="container header">
+	
+	<div class="span5">
+		<div class="logo">
+			<a href="index.html">
+				<img src="image/r___________renleipic_01/logo.png" alt="依依不舍"/>
+			</a>
+		</div>
+	</div>
+	<div class="span9">
+		<div class="headerAd">
+			<img src="image/header.jpg" width="320" height="50" alt="正品保障" title="正品保障"/>
+		</div>	
+	</div>
+	<div id="span10" class="span10 last">
+		<div class="topNav clearfix">
+			<ul>
+				<li id="headerLogin" class="headerLogin" style="display: list-item;">
+					<a href="login.html" v-model="loginname">欢迎{{loginname}}</a>|
+				</li>
+				<li id="headerRegister" class="headerRegister" style="display: list-item;">
+					<a href="reg.html">注册</a>|
+				</li>
+				<li id="headerUsername" class="headerUsername"></li>
+				<li id="headerLogout" class="headerLogout">
+					<a>[退出]</a>|
+				</li>
+				<li><a>会员中心</a> |</li>
+				<li><a>购物指南</a> |</li>
+				<li><a>关于我们</a></li>
+			</ul>
+		</div>
+		<div class="cart">
+			<a href="cart.html">购物车</a>
+		</div>
+		<div class="phone">
+			客服热线:<strong>96008/53277764</strong>
+		</div>
+	</div>
+	<script type="text/javascript">
+	var vue4 = new Vue({
+		el : "#span10",
+		data : {
+			loginname : ""
+		},
+		created(){
+			axios.get("user.s?op=queryName").then(res=>{
+				this.loginname = res.data;
+			})
+		}
+	});
+	</script>
+	<div id="querycg" class="span24">
+		<ul class="mainNav">
+			<li><a href="index.html">首页</a>|</li>
+			<li v-for=" lc in listc "><a :href="'clist.html?cid=' + lc.cid +'#'+lc.cid + '&pageIndex=1'">{{lc.cname}}</a> |</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+	var vue3 = new Vue({
+		el : "#querycg",
+		data : {
+			listc : []
+		},
+		created(){
+			axios.get("category.s?op=queryAll").then(res=>{
+				this.listc = res.data;
+			})
+		}
+	});
+	</script>
+
+
+</div>	
+	<div class="container cart">
+		<div id="cart" class="span24">
+			<div class="step step1">购物车列表</div>
+			<table>
+				<tbody>
+					<tr>
+						<th>图片</th>
+						<th>商品名称</th>
+						<th>价格</th>
+						<th>数量</th>
+						<th>小计</th>
+						<th>操作</th>
+					</tr>
+					<tr v-for=" c in clist">
+						<td width="60">
+							<img :src="c.image">
+						</td>
+						<td>
+							<a target="_blank">{{c.pname}}</a>
+						</td>
+						<td>￥{{c.shop_price}}</td>
+						<td class="quantity" width="60">{{c.count}}</td>
+						<td width="140">
+							<span class="subtotal">￥{{c.count*c.shop_price}}</span>
+						</td>
+						<td>
+							<!-- :href="'cart.html?pid=' + c.pid"  -->
+							<a class="delete" @click="deleteOne(c.ciid)">删除</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+				
+			<dl id="giftItems" class="hidden" style="display: none;">
+			</dl>
+			<div class="total">
+				<em id="promotion"></em>
+				<em>登录后确认是否享有优惠</em>
+				赠送积分: <em id="effectivePoint">11017.0</em>
+				商品金额: <strong id="effectivePrice">11017.0</strong>
+			</div>
+			<div class="bottom">
+				<a href="cart.html" id="clear" class="clear">清空购物车</a>
+				<a href="pay.html" @click="topay" id="submit" class="submit">提交订单</a>
+			</div>
+		</div>
+		<script type="text/javascript">
+		var vue1 = new Vue({
+			el : "#cart",
+			data : {
+				clist : [],
+				totalprice : 0 //商品金额
+			},
+			created(){
+				axios.get("cart.s?op=queryByUid").then(res=>{
+					this.clist = res.data;
+				});
+			},
+			methods : {
+				deleteOne(ciid){
+					var params = new URLSearchParams();
+					params.append("ciid", ciid);
+					params.append("op","deletebyCiid");
+					axios.post("cart.s", params).then(res=>{
+						alert("商品信息删除成功");
+					});
+				},
+				topay(ciid){
+					
+				}
+			}
+		});
+		</script>
+	</div>
+	
+<div class="container footer">
+	<div class="span24">
+		<div class="footerAd">
+			<img src="image\r___________renleipic_01/footer.jpg" alt="我们的优势" title="我们的优势" height="52" width="950">
+		</div>
+	</div>
+	<div class="span24">
+		<ul class="bottomNav">
+			<li><a href="#">关于我们</a> |</li>
+			<li><a href="#">联系我们</a> |</li>
+			<li><a href="#">诚聘英才</a> |</li>
+			<li><a href="#">法律声明</a> |</li>
+			<li><a>友情链接</a> |</li>
+			<li><a target="_blank">支付方式</a> |</li>
+			<li><a target="_blank">配送方式</a> |</li>
+			<li><a>SHOP++官网</a> |</li>
+			<li><a>SHOP++论坛</a></li>
+		</ul>
+	</div>
+	<div class="span24">
+		<div class="copyright">Copyright © 2005-2013 Mango商城 版权所有</div>
+	</div>
+</div>
+</body></html>
