@@ -12,5 +12,21 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
   
-  
+  <dependencies>
+  	<!-- spring上下文依赖 -->
+	<dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-context</artifactId>
+    	<version>5.2.11.RELEASE</version>
+	</dependency>
+	
+	<!-- junit测试框架依赖 -->
+	<dependency>
+		<groupId>junit</groupId>
+		<artifactId>junit</artifactId>
+		<version>4.13.1</version>
+		<scope>test</scope>
+	</dependency>
+  	
+  </dependencies>
 </project>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="hello" class="com.yc.spring.Hello">  
+    </bean>
+
+    <bean id="user" class="com.yc.spring.di.User"> 
+    	<property name="name" value="林冲"></property>
+        <property name="age" value="40"></property>
+        <property name="likes">
+        	<array>
+        		<value>篮球</value>
+        		<value>电影</value>
+        		<value>手游</value>
+        	</array>
+        </property>
+    </bean>
+    
+    <bean id="user1" class="com.yc.spring.di.User">
+        <constructor-arg name="name" value="李逵"></constructor-arg>
+        <constructor-arg name="age" value="35"></constructor-arg>
+        <constructor-arg name="email" value="lk@126.com"></constructor-arg>
+    </bean>
+    
+    <bean id="user2" class="com.yc.spring.di.User">
+        <property name="name" value="宋江"></property>
+        <property name="friend" ref="user3"></property>
+    </bean>
+    
+    <bean id="user3" class="com.yc.spring.di.User">
+        <property name="name" value="吴用"></property>
+        <property name="age" value="45"></property>
+    </bean>
+</beans>
