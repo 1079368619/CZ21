@@ -32,7 +32,7 @@
 		<div class="topNav clearfix">
 			<ul>
 				<li id="headerLogin" class="headerLogin" style="display: list-item;">
-					<a href="login.html" v-model="loginname">欢迎{{loginname}}</a>|
+					<a href="" v-model="loginname">欢迎{{loginname}}</a>|
 				</li>
 				<li id="headerRegister" class="headerRegister" style="display: list-item;">
 					<a href="reg.html">注册</a>|
@@ -131,7 +131,7 @@
 			</div>
 			<div class="bottom">
 				<a href="cart.html" id="clear" class="clear">清空购物车</a>
-				<a href="pay.html" @click="topay" id="submit" class="submit">提交订单</a>
+				<a :href="pay.html" @click="topay" id="submit" class="submit">提交订单</a>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -154,9 +154,6 @@
 					axios.post("cart.s", params).then(res=>{
 						alert("商品信息删除成功");
 					});
-				},
-				topay(ciid){
-					
 				}
 			}
 		});

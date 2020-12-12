@@ -19,6 +19,19 @@
     	<artifactId>spring-context</artifactId>
     	<version>5.2.11.RELEASE</version>
 	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+		<version>1.9.6</version>
+	</dependency>
+
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-test</artifactId>
+		<version>5.2.11.RELEASE</version>
+	</dependency>
 	
 	<!-- junit测试框架依赖 -->
 	<dependency>

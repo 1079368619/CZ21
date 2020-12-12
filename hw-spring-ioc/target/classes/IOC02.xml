@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- test1 -->
+	<bean id="account" scope="singleton" class="com.yc.spring.bank.bean.Account" primary="true">
+		<property name="uname" value="武松"></property>
+		<property name="upass" value="abc123"></property>
+		<property name="head" value="20.gif"></property>
+		<property name="gender" value="1"></property>		
+	</bean>
+	<bean scope="prototype" id="account1" class="com.yc.spring.bank.bean.Account">
+	</bean>
+	
+	<bean factory-method="getInstance" id="account2" class="com.yc.spring.bank.bean.Account">
+	</bean>
+	
+	<bean factory-method="getInstance" id="account3" class="com.yc.spring.bank.bean.Account">
+	</bean>
+	
+	<bean scope="prototype" factory-method="getInstance1" id="account4" class="com.yc.spring.bank.bean.Account">
+	</bean>
+	
+</beans>
