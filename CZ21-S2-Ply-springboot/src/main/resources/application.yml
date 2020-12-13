@@ -1,0 +1,14 @@
+spring:
+   datasource:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/account
+      username: root
+      password: a
+
+
+logging:
+   level:
+      com:
+         CZ21S2Plyspringboot:
+            dao: debug
+            web: warn
