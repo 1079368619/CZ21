@@ -1,4 +1,4 @@
-package com.yc.CZ21S2Plyspringboot.bean;
+package com.yc.CZ21S2Plyspringboot.dao;
 
 /**
  * 银行账户
@@ -12,6 +12,7 @@ public class Account {
 	private Double balance; // 余额
 	private String name; // 姓名
 	private String pwd; // 密码
+	private String email; //邮箱
 	
 	public Account() { }
 	
@@ -51,6 +52,14 @@ public class Account {
 	}
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override

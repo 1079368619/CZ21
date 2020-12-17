@@ -12,15 +12,18 @@
 	<h2>Basic DataGrid</h2>
 	<p>The DataGrid is created from markup, no JavaScript code needed.</p>
 	<div style="margin:20px 0;"></div>
-	
+	<input type="text" >
 	<table class="easyui-datagrid" title="Basic DataGrid" style="width:700px;height:250px"
 			data-options="
 				singleSelect:true,collapsible:true,
 				url:'alist.action',method:'get'">
 		<thead>
+		
 			<tr>
-				<th data-options="field:'accountid',width:80">Item ID</th>
-				<th data-options="field:'balance',width:100">Product</th>
+			
+				<th data-options="field:'accountid',width:80">账号</th>
+				<th data-options="field:'name',width:100">名字</th>
+				<th data-options="field:'balance',width:100">余额</th>
 			</tr>
 		</thead>
 	</table>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="vue.min.js"></script>
+
+<script type="text/javascript">
+	var websocket;
+	
+	function closeWebSocket(){
+		websocket.close();
+	}
+</script>
+</head>
+<body>
+	<div id="main">
+		<textarea rows="10" cols="40" v-html="allMsg"></textarea>
+		<hr>
+		你的账号：<input v-model="myId"><button @click="conn">连接</button>
+		<hr>
+		对方账号：<input v-model="youId"><br>
+		消息内容：<input v-model="content"><button @click="send">发送</button>
+		
+		
+	</div>
+	<script type="text/javascript">
+	var vue = new Vue({
+		el : "#main",
+		data : {
+			myId : "",
+			youId : "",
+			content : "",
+			allMsg : ""
+		},
+		methods : {
+			conn(){
+				websocket = new WebSocket("ws://localhost/websocket/" + this.myId);
+				
+				websocket.onerror = function(){};
+				//
+				websocket.onopen = function(event){
+					alert("连接成功！");
+				}
+				websocket.onmessage = (event)=>{
+					console.info(event);
+					this.allMsg += event.data + "\n";
+				}
+				websocket.onclose = function(){};
+			},
+			send(){
+				websocket.send(this.youId + ":" + this.content);
+				this.allMsg += this.myId + ":" + this.content + "\n";
+			}
+		}
+	});
+	</script>
+</body>
+</html>

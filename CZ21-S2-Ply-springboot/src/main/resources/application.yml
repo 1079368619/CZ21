@@ -1,14 +1,27 @@
+server:
+   port: 80
+
 spring:
    datasource:
       driverClassName: com.mysql.jdbc.Driver
       url: jdbc:mysql://127.0.0.1:3306/account
       username: root
       password: a
+   mail:
+      host: smtp.qq.com
+      username: 1079368619@qq.com
+      password: bxpqczztymcrjcgh
+      default-encoding: UTF-8
+
+mail:
+   from:
+      addr: 1079368619@qq.com
 
 
 logging:
    level:
       com:
-         CZ21S2Plyspringboot:
-            dao: debug
-            web: warn
+         yc:
+            CZ21S2Plyspringboot:
+               dao: debug
+               web: warn

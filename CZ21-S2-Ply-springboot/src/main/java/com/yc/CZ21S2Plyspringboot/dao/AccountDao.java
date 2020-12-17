@@ -7,8 +7,6 @@ import javax.annotation.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.yc.CZ21S2Plyspringboot.bean.Account;
-
 @Repository
 public class AccountDao {
 
@@ -56,6 +54,27 @@ public class AccountDao {
 			a.setPwd(rs.getString("pwd"));
 			return a;
 		});
+	}
+
+	public Account selectByName(String name) {
+		String sql = "select * from account where name=?";
+		
+		return jt.query(sql, rs -> {
+			rs.next();
+			Account a = new Account();
+			a.setAccountid(rs.getInt("accountid"));
+			a.setName(rs.getString("name"));
+			a.setBalance(rs.getDouble("balance"));
+			a.setPwd(rs.getString("pwd"));
+			a.setEmail(rs.getString("email"));
+			return a;
+		}, name);
+	}
+
+	public void updatePwdByName(String pwd, String name) {
+		String sql = "update account set pwd=? where name=?";
+		jt.update(sql, pwd, name);
+
 	}
 
 }

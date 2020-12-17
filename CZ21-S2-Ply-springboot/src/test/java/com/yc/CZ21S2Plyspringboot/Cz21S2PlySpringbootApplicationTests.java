@@ -7,6 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
 
+import com.yc.CZ21S2Plyspringboot.biz.MailBiz;
+
 @SpringBootTest
 class Cz21S2PlySpringbootApplicationTests {
 	
@@ -21,5 +23,11 @@ class Cz21S2PlySpringbootApplicationTests {
 		jt.update("insert into account values(null,?,?,?)", 1200, "王五", "3");
 		jt.update("insert into account values(null,?,?,?)", 7890, "赵六", "13");
 	}
+	@Resource
+	private MailBiz mbiz;
 
+	@Test
+	void test1() {
+		mbiz.sendSimpleMail("1079368619@qq.com", "测试邮件", "我的测试邮件：测试邮件");
+	}
 }

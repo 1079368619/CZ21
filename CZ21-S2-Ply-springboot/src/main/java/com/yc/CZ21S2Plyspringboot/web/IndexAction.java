@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yc.CZ21S2Plyspringboot.bean.Account;
+import com.yc.CZ21S2Plyspringboot.dao.Account;
 import com.yc.CZ21S2Plyspringboot.dao.AccountDao;
 
 @RestController
@@ -19,10 +19,10 @@ public class IndexAction {
 	}
 	
 	@Resource
-	private AccountDao adoo;
+	private AccountDao adao;
 	
 	@RequestMapping("alist.action")
 	public List<Account> query() {
-		return adoo.selectAll();
+		return adao.selectAll();
 	}
 }

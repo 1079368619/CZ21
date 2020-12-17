@@ -24,7 +24,7 @@ public class AddressDao {
 	}
 	
 	public void insert(Address a) throws SQLException{
-		String sql = "insert into orderitem values (null, ?, ?)";
+		String sql = "insert into address values (null, ?, ?)";
 		DBHelper.update(sql, a.getUid(), a.getAddr());
 	}
 }
