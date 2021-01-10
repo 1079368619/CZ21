@@ -177,7 +177,7 @@
 					<dl class="quantity">
 						<dt>购买数量:</dt>
 						<dd>
-							<input id="quantity" name="count" value="1" maxlength="4" onpaste="return false;" type="text">
+							<input id="quantity" ref="counts" name="count" value="1" maxlength="4" onpaste="return false;" type="text">
 							<div>
 								<span id="increase" class="increase">&nbsp;</span>
 								<span id="decrease" class="decrease">&nbsp;</span>
@@ -212,8 +212,7 @@
 		var vue1 = new Vue({
 			el : "#pdetail",
 			data : {
-				list : {},
-				num : 1
+				list : {}
 			},
 			created(){
 				axios.get("product.s?op=queryByPid&pid=" + location.hash.substring(1)).then(res=>{
@@ -229,6 +228,7 @@
 						if(res.data && res.data.uid){
 							var params = new URLSearchParams();
 		        			params.append("pid",this.list.pid);
+		        			params.append("count",this.$refs.counts.value);
 		        			params.append("op","addCart");
 							axios.post("cart.s", params).then(res=>{
 		        				if(res.data.code == 1){

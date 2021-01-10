@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.yc.damai.po.OrderItem;
-import com.yc.damai.po.Product;
 
 @Repository
 public class OrderItemDao extends BaseDao {

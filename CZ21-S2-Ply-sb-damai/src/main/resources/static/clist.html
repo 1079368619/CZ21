@@ -155,9 +155,6 @@
 					cplist : []
 				},
 				created(){
-					axios.get("product.s?op=queryByCsid&csid=" + location.hash.substring(1)).then(res=>{
-						this.cplist = res.data;
-					});
 					axios.get("product.s?op=queryByCid&cid=" + location.hash.substring(1)).then(res=>{
 						this.cplist = res.data;
 					});

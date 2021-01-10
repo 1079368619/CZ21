@@ -77,4 +77,11 @@ public class User implements Serializable {
 		this.addr = addr;
 	}
 	
+	@Override
+	public String toString() {
+		return "User [uid=" + uid + ", username=" + username + ", password=" + password + ", name=" + name + ", email="
+				+ email + ", phone=" + phone + ", sex=" + sex + ", state=" + state + ", code=" + code + ", addr=" + addr
+				+ "]";
+	}
+	
 }

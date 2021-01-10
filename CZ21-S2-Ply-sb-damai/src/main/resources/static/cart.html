@@ -32,14 +32,15 @@
 		<div class="topNav clearfix">
 			<ul>
 				<li id="headerLogin" class="headerLogin" style="display: list-item;">
-					<a href="" v-model="loginname">欢迎{{loginname}}</a>|
+					<a href="login.html" v-if="user==''">登录</a>
+					<a href="" v-if="user!==null">欢迎{{user.name}}</a>|
 				</li>
 				<li id="headerRegister" class="headerRegister" style="display: list-item;">
 					<a href="reg.html">注册</a>|
 				</li>
 				<li id="headerUsername" class="headerUsername"></li>
 				<li id="headerLogout" class="headerLogout">
-					<a>[退出]</a>|
+					<a @click="logout()">[退出]</a>|
 				</li>
 				<li><a>会员中心</a> |</li>
 				<li><a>购物指南</a> |</li>
@@ -57,12 +58,22 @@
 	var vue4 = new Vue({
 		el : "#span10",
 		data : {
-			loginname : ""
+			user : {}
 		},
 		created(){
-			axios.get("user.s?op=queryName").then(res=>{
-				this.loginname = res.data;
-			})
+			axios.get("user.s?op=getLoginedUser").then(res=>{
+				this.user = res.data;
+			});
+		},
+		methods :{
+			logout(){
+				if(confirm("确定要退出登录?")){
+					axios.get("out.s").then(res=>{
+						alert(res.data.msg);
+						location.href = "index.html";
+					});
+				}
+			}
 		}
 	});
 	</script>
@@ -88,6 +99,7 @@
 
 
 </div>	
+
 	<div class="container cart">
 		<div id="cart" class="span24">
 			<div class="step step1">购物车列表</div>
@@ -115,7 +127,7 @@
 						</td>
 						<td>
 							<!-- :href="'cart.html?pid=' + c.pid"  -->
-							<a class="delete" @click="deleteOne(c.ciid)">删除</a>
+							<a href="cart.html" class="delete" @click="deleteCart(c.pid)">删除</a>
 						</td>
 					</tr>
 				</tbody>
@@ -124,36 +136,60 @@
 			<dl id="giftItems" class="hidden" style="display: none;">
 			</dl>
 			<div class="total">
-				<em id="promotion"></em>
-				<em>登录后确认是否享有优惠</em>
-				赠送积分: <em id="effectivePoint">11017.0</em>
-				商品金额: <strong id="effectivePrice">11017.0</strong>
+				商品金额: <strong id="effectivePrice">￥{{sum}}</strong>
 			</div>
 			<div class="bottom">
-				<a href="cart.html" id="clear" class="clear">清空购物车</a>
-				<a :href="pay.html" @click="topay" id="submit" class="submit">提交订单</a>
+				<a href="cart.html" @click="clearCart()" id="clear" class="clear">清空购物车</a>
+				<a href="pay.html" @click="sbOreder()" id="submit" class="submit">提交订单</a>
 			</div>
 		</div>
 		<script type="text/javascript">
 		var vue1 = new Vue({
 			el : "#cart",
 			data : {
-				clist : [],
-				totalprice : 0 //商品金额
+				clist : []
 			},
 			created(){
-				axios.get("cart.s?op=queryByUid").then(res=>{
-					this.clist = res.data;
+				axios.get("user.s?op=getLoginedUser").then(res=>{
+					if( res.data && res.data.uid ){
+						axios.get("cart.s?op=queryCart").then(res=>{
+							this.clist = res.data;
+						});
+					}else{
+						alert("你尚未登录");
+						location.href = "login.html";
+					}
 				});
+				
+			},
+			computed:{
+				sum(){
+					var sum = 0;
+					for(var i in this.clist){
+						sum+=this.clist[i].shop_price*this.clist[i].count;
+					}
+					return sum;
+				}
 			},
 			methods : {
-				deleteOne(ciid){
-					var params = new URLSearchParams();
-					params.append("ciid", ciid);
-					params.append("op","deletebyCiid");
-					axios.post("cart.s", params).then(res=>{
-						alert("商品信息删除成功");
-					});
+				deleteCart(pid){
+					if(confirm("确定删除该商品?")){
+						axios.get("cart.s?op=deleteCart&pid="+pid).then(res=>{
+							alert(res.data.msg);
+						});
+					}
+				},
+				clearCart(){
+					if(confirm("确定删除购物车?")){
+						axios.get("cart.s?op=clearCart").then(res=>{
+							alert(res.data.msg);
+						});
+					}
+				},
+				sbOrder(){
+					if(confirm("确定要提交订单?")){
+						
+					}
 				}
 			}
 		});

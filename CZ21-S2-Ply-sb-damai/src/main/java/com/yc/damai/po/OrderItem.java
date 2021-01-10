@@ -42,4 +42,10 @@ public class OrderItem implements Serializable {
 		this.oid = oid;
 	}
 	
+	@Override
+	public String toString() {
+		return "OrderItem [itemid=" + itemid + ", count=" + count + ", subtotal=" + subtotal + ", pid=" + pid + ", oid="
+				+ oid + "]";
+	}
+	
 }

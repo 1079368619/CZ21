@@ -56,12 +56,22 @@ public class CartDao extends BaseDao {
 		jt.update(sql, uid);
 	}
 	
+	public void deletebyPid(int pid) {
+		String sql = "delete from cart where pid=?";
+		jt.update(sql, pid);
+	}
+	
 	public List<Map<String, Object>> selectCart(int uid){
 		String sql = "select * from cart a" + 
 				" left join user b on a.uid=b.uid" + 
 				" left join product c on a.pid=c.pid" + 
 				" where a.uid=?";
 		return jt.queryForList(sql,uid);
+	}
+
+	public Double selectTotalByUid(int uid) {
+		String sql = "select sum(a.count * b.shop_price) from cart a join product b on a.pid = b.pid where a.uid = ?";
+		return jt.queryForObject(sql, Double.class, uid);
 	}
 	
 }

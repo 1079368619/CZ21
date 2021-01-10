@@ -23,7 +23,7 @@ public class UserAction {
 	@Resource
 	private UserBiz ubiz;
 	
-	@RequestMapping("getLoginedUser")
+	@RequestMapping(path="user.s",params="op=getLoginedUser")
 	public User getLoginedUser(String username,HttpSession session) {
 		User user = (User) session.getAttribute("loginedUser");
 		return user;
@@ -31,13 +31,8 @@ public class UserAction {
 	
 	@RequestMapping("login.s")
 	public Result login(String username, String password, String vcode, HttpSession session) {
-		User user = new User();
-		user.setPassword(password);
-		user.setUsername(username);
-		
-		User loginedUser;
 		try {
-			loginedUser = (User) ubiz.login(user, vcode, session);
+			User loginedUser = (User) ubiz.login(username, password, vcode, session);
 			session.setAttribute("loginedUser", loginedUser);
 			return Result.success("登录成功");
 		} catch (BizException | SQLException e) {
@@ -48,17 +43,21 @@ public class UserAction {
 	
 	
 	@RequestMapping("reg")
-	public Result reg(User user, String vcode, HttpSession session) {
+	public Result reg(User user, String repassword, String vcode, HttpSession session) {
 		try {
+			if(user.getPassword() == repassword) {
+				throw new BizException("两次密码不一致！");
+			}
 			String svcode = (String) session.getAttribute("vcode");
 			if( !vcode.equalsIgnoreCase(svcode)) {
 				throw new BizException("验证码错误");
 			}
 			ubiz.register(user);
-			return Result.success("登录成功");
+			return Result.success("注册成功");
 		} catch (BizException e) {
 			e.printStackTrace();
 			return Result.failure(e.getMessage());
 		}
 	}
+	
 }

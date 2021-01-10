@@ -71,5 +71,12 @@ public class Product implements Serializable {
 		this.csid = csid;
 	}
 	
+	@Override
+	public String toString() {
+		return "Product [pid=" + pid + ", pname=" + pname + ", marketPrice=" + marketPrice + ", shopPrice=" + shopPrice
+				+ ", image=" + image + ", pdesc=" + pdesc + ", isHot=" + isHot + ", pdate=" + pdate + ", csid=" + csid
+				+ "]";
+	}
+	
 	
 }

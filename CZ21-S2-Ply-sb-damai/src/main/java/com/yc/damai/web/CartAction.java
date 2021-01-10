@@ -25,8 +25,8 @@ public class CartAction {
 	private CartBiz cbiz;
 	
 	@RequestMapping(path="cart.s",params="op=deleteCart")
-	public void deleteCart() {
-		
+	public void deleteCart(int pid) {
+		cdao.deletebyPid(pid);
 	}
 	
 	/**
@@ -68,4 +68,5 @@ public class CartAction {
 		return cdao.selectCart(user.getUid());
 		
 	}
+	
 }

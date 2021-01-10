@@ -29,4 +29,9 @@ public class Address implements Serializable {
 		this.addr = addr;
 	}
 	
+	@Override
+	public String toString() {
+		return "Address [aid=" + aid + ", uid=" + uid + ", addr=" + addr + "]";
+	}
+	
 }

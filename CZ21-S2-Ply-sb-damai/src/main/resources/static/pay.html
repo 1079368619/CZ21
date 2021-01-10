@@ -32,14 +32,15 @@
 		<div class="topNav clearfix">
 			<ul>
 				<li id="headerLogin" class="headerLogin" style="display: list-item;">
-					<a href="login.html" v-model="loginname">欢迎{{loginname}}</a>|
+					<a href="login.html" v-if="user==''">登录</a>
+					<a href="" v-if="user!==null">欢迎{{user.name}}</a>|
 				</li>
 				<li id="headerRegister" class="headerRegister" style="display: list-item;">
 					<a href="reg.html">注册</a>|
 				</li>
 				<li id="headerUsername" class="headerUsername"></li>
 				<li id="headerLogout" class="headerLogout">
-					<a>[退出]</a>|
+					<a @click="logout()">[退出]</a>|
 				</li>
 				<li><a>会员中心</a> |</li>
 				<li><a>购物指南</a> |</li>
@@ -57,16 +58,25 @@
 	var vue4 = new Vue({
 		el : "#span10",
 		data : {
-			loginname : ""
+			user : {}
 		},
 		created(){
-			axios.get("user.s?op=queryName").then(res=>{
-				this.loginname = res.data;
-			})
+			axios.get("user.s?op=getLoginedUser").then(res=>{
+				this.user = res.data;
+			});
+		},
+		methods :{
+			logout(){
+				if(confirm("确定要退出登录?")){
+					axios.get("out.s").then(res=>{
+						alert(res.data.msg);
+						location.href = "index.html";
+					});
+				}
+			}
 		}
 	});
 	</script>
-	<!-- 菜单栏 -->
 	<div id="querycg" class="span24">
 		<ul class="mainNav">
 			<li><a href="index.html">首页</a>|</li>
@@ -87,24 +97,22 @@
 	});
 	</script>
 
-	
-</div>	
+
+</div>
 
 <div class="container cart">
 
-		<div id="carts"  class="span24">
+		<div class="span24" id="payform">
 		
 			<div class="step step1">
 				<ul>
-					
 					<li  class="current"></li>
 					<li  >生成订单成功</li>
 					<li  >订单号:73</li>
 				</ul>
 			</div>
-		
-				<table>
-					<tbody>
+			<table>
+				<tbody>
 					<tr>
 						<th>图片</th>
 						<th>商品</th>
@@ -112,96 +120,35 @@
 						<th>数量</th>
 						<th>小计</th>
 					</tr>
-					
-						<tr>
-							<td width="60">
-								<img src="products/1/cs60003.png"/>
-							</td>
-							<td>
-								<a target="_blank">商务修身羊毛呢子风衣 中长款呢大衣外套</a>
-							</td>
-							<td>
-								299.0
-							</td>
-							<td class="quantity" width="60">
-									1							
-							</td>
-							<td width="140">
-								<span class="subtotal">￥299.0</span>
-							</td>
-						</tr>
-					
-						<tr>
-							<td width="60">
-								<img src="products/1/cs20004.jpg"/>
-							</td>
-							<td>
-								<a target="_blank">整貂皮大衣外套中长款收腰立领长袖进口真皮草裘皮</a>
-							</td>
-							<td>
-								9900.0
-							</td>
-							<td class="quantity" width="60">
-									3							
-							</td>
-							<td width="140">
-								<span class="subtotal">￥29700.0</span>
-							</td>
-						</tr>
-					
-						<tr>
-							<td width="60">
-								<img src="products/1/cs10007.jpg"/>
-							</td>
-							<td>
-								<a target="_blank">新款优雅奢华毛领白鸭绒轻薄羽绒服</a>
-							</td>
-							<td>
-								590.0
-							</td>
-							<td class="quantity" width="60">
-									1							
-							</td>
-							<td width="140">
-								<span class="subtotal">￥590.0</span>
-							</td>
-						</tr>
-					
-						<tr>
-							<td width="60">
-								<img src="products/1/cs10001.jpg"/>
-							</td>
-							<td>
-								<a target="_blank">韩版连帽加厚毛衣女外套</a>
-							</td>
-							<td>
-								228.0
-							</td>
-							<td class="quantity" width="60">
-									1							
-							</td>
-							<td width="140">
-								<span class="subtotal">￥228.0</span>
-							</td>
-						</tr>
-					
+					<tr v-for="p in plist">
+						<td width="60">
+							<img :src="p.image"/>
+						</td>
+						<td>
+							<a target="_blank">{{p.pname}}</a>
+						</td>
+						<td>{{p.shop_price}}</td>
+						<td class="quantity" width="60">{{p.count}}</td>
+						<td width="140">
+							<span class="subtotal">￥{{p.shop_price * p.count}}</span>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-				<dl id="giftItems" class="hidden" style="display: none;">
-				</dl>
-				<div class="total">
-					<em id="promotion"></em>
-					商品金额: <strong id="effectivePrice">￥30817.0元</strong>
-				</div>
+			<dl id="giftItems" class="hidden" style="display: none;"></dl>
+			<div class="total">
+				<em id="promotion"></em>
+				商品金额: <strong id="effectivePrice">￥{{sum}}元</strong>
+			</div>
 			<form id="orderForm" action="msg.html" method="post">
 				<input type="hidden" name="order.oid" value="73"/>
 				<div class="span24">
 					<p>
-							收货地址：<input name="order.addr" type="text" value="天子脚下" style="width:350px" />
+							收货地址：<input name="order.addr" type="text" v-model="addr" style="width:350px" />
 								<br />
-							收货人&nbsp;&nbsp;&nbsp;：<input name="order.name" type="text" value="Song" style="width:150px" />
+							收货人&nbsp;&nbsp;&nbsp;：<input name="order.name" type="text" v-model="name" style="width:150px" />
 								<br /> 
-							联系方式：<input name="order.phone" type="text" value="13283718600" style="width:150px" />
+							联系方式：<input name="order.phone" type="text" v-model="phone" style="width:150px" />
 
 						</p>
 						<hr />
@@ -228,8 +175,7 @@
 						</p>
 						<hr />
 						<p style="text-align:right">
-							<a href="javascript:document.getElementById('orderForm').submit();">
-								<img src="images/finalbutton.gif" width="204" height="51" border="0" />
+							<a><img @click="Order()" src="images/finalbutton.gif" width="204" height="51" border="0" />
 							</a>
 						</p>
 				</div>
@@ -237,12 +183,44 @@
 		</div>
 		<script type="text/javascript">
 		var vue1 = new Vue({
-			el : "#carts",
+			el : "#payform",
 			data : {
-				clist : []
+				plist : []
 			},
 			created(){
-				
+				axios.get("user.s?op=getLoginedUser").then(res=>{
+					if(res.data && res.data.uid){
+						axios.get("cart.s?op=queryCart").then(res=>{
+							this.plist = res.data;
+						});
+					}else{
+						alert("你尚未登录");
+						location.href = "login.html";
+					}
+				});
+			},
+			computed : {
+				sum(){
+					var sum = 0;
+					for(var i in this.plist){
+						sum += this.plist[i].shop_price*this.plist[i].count;
+					}
+					return sum;
+				}
+			},
+			methods:{
+				Order(){
+					if(confirm("确定提交?")){
+						var params = new URLSearchParams();
+						params.append("name", this.name);
+						params.append("addr", this.addr);
+						params.append("phone", this.phone);
+						axios.get("order.s",params).then(res=>{
+							alert(res.data.msg);
+							location.href = "olist.html";
+						});
+					}
+				}
 			}
 		});
 		</script>

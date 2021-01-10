@@ -12,6 +12,7 @@
 <script type="text/javascript" src="js/axios.min.js"></script>
 
 <script type="text/javascript">
+	
 	function checkForm(){
 		// 校验用户名:
 		
@@ -23,6 +24,13 @@
 		return false;
 	}
 	
+	//校验用户名是否存在
+	function checkUserName(){
+		// ajax 验证用户名是否存在
+	}
+	function changeImg(){
+		// 更新验证码
+	}
 </script>
 </head>
 <body>
@@ -97,14 +105,14 @@
 								<tr>
 									<th><span class="requiredField">*</span>用户名:</th>
 									<td>
-										<input v-model="username" type="text" id="username" name="username" class="text" maxlength="20" onblur="checkUserName()" />
+										<input v-model="user.username" type="text" id="username" name="username" class="text" maxlength="20" onblur="checkUserName()" />
 										<span id="span1"></span>
 									</td>
 								</tr>
 								<tr>
 									<th><span class="requiredField">*</span>密&nbsp;&nbsp;码:</th>
 									<td>
-										<input v-model="password" type="password" id="password" name="password" class="text" maxlength="20" autocomplete="off" />
+										<input v-model="user.password" type="password" id="password" name="password" class="text" maxlength="20" autocomplete="off" />
 										<span></span>
 									</td>
 								</tr>
@@ -117,20 +125,20 @@
 								<tr>
 									<th><span class="requiredField">*</span>E-mail:</th>
 									<td>
-										<input v-model="email" type="text" id="email" name="email"class="text" maxlength="200" />
+										<input v-model="user.email" type="text" id="email" name="email"class="text" maxlength="200" />
 										<span></span>
 									</td>
 								</tr>
 								<tr>
 									<th><span class="requiredField">*</span>电话:</th>
 									<td>
-										<input v-model="phone" type="text" id="phone" name="phone" class="text" maxlength="200" onkeyup="value=value.replace(/[^\d]/g,'')" onafterpaste="value=value.replace(/\D/g,'')">
+										<input v-model="user.phone" type="text" id="phone" name="phone" class="text" maxlength="200" onkeyup="value=value.replace(/[^\d]/g,'')" onafterpaste="value=value.replace(/\D/g,'')">
 									</td>
 								</tr>
 								<tr>
 									<th>姓名:</th>
 									<td>
-										<input v-model="name" type="text" name="name" class="text" maxlength="200">
+										<input v-model="user.name" type="text" name="name" class="text" maxlength="200">
 									</td>
 								</tr>
 								<tr>
@@ -138,10 +146,10 @@
 									<td>
 										<span class="fieldSet"> 
 											<label> 
-												<input v-model="sex" type="radio" name="sex" value="男" checked="true">男 
+												<input v-model="user.sex" type="radio" name="sex" value="男" checked="true">男 
 											</label> 
 											<label> 
-												<input v-model="sex" type="radio" name="sex" value="女">女
+												<input v-model="user.sex" type="radio" name="sex" value="女">女
 											</label> 
 										</span>
 									</td>
@@ -151,7 +159,7 @@
 								<tr>
 									<th>地址:</th>
 									<td>
-										<input v-model="addr" type="text" name="address" class="text" maxlength="200">
+										<input v-model="user.addr" type="text" name="address" class="text" maxlength="200">
 									</td>
 								</tr>
 								<tr>
@@ -159,7 +167,7 @@
 									<td>
 										<span class="fieldSet"> 
 											<input v-model="vcode" type="text" id="captcha" name="captcha" class="text captcha" maxlength="4" autocomplete="off">
-											<img style="width:100px;" src="VerifyCodeServlet" onclick="this.src='VerifyCodeServlet?a=' + new Date();" id="captchaImage" class="captchaImage" src="images/vcode.jpg" title="点击更换验证码" onclick="changeImg()">
+											<img style="width:100px;" :src="imgsrc" id="captchaImage" class="captchaImage" title="点击更换验证码" @click="changeImg()">
 										</span>
 									</td>
 								</tr>
@@ -261,32 +269,38 @@
 				var vue1 = new Vue({
 					el : "#regit",
 					data : {
-						username : "",
-						password : "",
+						user : {
+							username : "",
+							password : "",
+							email : "",
+							phone : "",
+							name : "",
+							sex : "男",
+							addr : ""
+						},
+						
 						repassword : "",
-						email : "",
-						phone : "",
-						name : "",
-						sex : "",
-						addr : "",
-						vcode : ""
+						vcode : "",
+						imgsrc : "verifyCode.s?a="
 					},
 					methods : {
+						changeImg(){
+							this.imgsrc += new Date();
+						},
 	            		reg(){
 	            			var params = new URLSearchParams();
-	            			params.append("username",this.username);
-	            			params.append("password",this.password);
+	            			params.append("username",this.user.username);
+	            			params.append("password",this.user.password);
 	            			params.append("repassword",this.repassword);
-	            			params.append("email",this.email);
-	            			params.append("phone",this.phone);
-	            			params.append("name",this.name);
-	            			params.append("sex",this.sex);
-	            			params.append("addr",this.addr);
+	            			params.append("email",this.user.email);
+	            			params.append("phone",this.user.phone);
+	            			params.append("name",this.user.name);
+	            			params.append("sex",this.user.sex);
+	            			params.append("addr",this.user.addr);
 	            			params.append("vcode",this.vcode);
-	            			params.append("op","reg");
-	            			axios.post("user.s", params).then(res=>{
-	            				alert(res.data);
-	            				if(res.data == "注册成功"){
+	            			axios.post("reg", params).then(res=>{
+	            				alert(res.data.msg);
+	            				if(res.data.code == 1){
 	    	            			location.href="login.html";
 	            				}
 	            			});

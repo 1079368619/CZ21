@@ -1,19 +1,14 @@
 package com.yc.damai.web;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yc.damai.dao.CategoryDao;
-import com.yc.damai.dao.CategorySecondDao;
 import com.yc.damai.po.Category;
-import com.yc.damai.po.User;
 
 @RestController
 public class CategoryAction {
@@ -21,20 +16,8 @@ public class CategoryAction {
 	@Resource
 	private CategoryDao cdao;
 	
-	@Resource
-	private CategorySecondDao csdao;
-	
-	@RequestMapping("queryAll")
-	public Map<String, Object> queryAll(){
-		Map<String, Object> data = new HashMap<>();
-		data.put("clist", cdao.queryAllCategory());
-		data.put("cslist", csdao.queryAllCategorySecond());
-		return data;
-	}
-	
-	
-	@RequestMapping(path="category.s",params="op=queryCategory")
-	public List<Category> queryCategory(){
+	@RequestMapping(path="category.s",params="op=queryAll")
+	public List<Category> queryAll(){
 		return cdao.queryAllCategory();
 		
 	}

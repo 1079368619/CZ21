@@ -1,7 +1,6 @@
 package com.yc.damai.biz;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -16,7 +15,7 @@ import com.yc.damai.util.Utils;
 public class UserBiz {
 
 	@Resource
-	private UserDao udao = new UserDao();
+	private UserDao udao;
 	
 	@Resource
 	private MailBiz mbiz;
@@ -50,8 +49,8 @@ public class UserBiz {
 		try {
 			/*同用户名验证*/
 			String username = user.getUsername();
-			User dbuser = udao.selectByName(username);
-			if(dbuser != null ) {
+			User duser = udao.selectByName(username);
+			if(duser != null ) {
 				throw new BizException("该用户名已经被注册");
 			}
 			
@@ -69,28 +68,26 @@ public class UserBiz {
 	 * @throws BizException
 	 * @throws SQLException
 	 */
-	public User login(User user,String vcode,HttpSession session) throws BizException, SQLException {
-		String username = user.getUsername();
-		String password = user.getPassword();
+	public User login(String username, String password, String vcode,HttpSession session) throws BizException, SQLException {
 		//字段验证
 		Utils.checkNull(username, "请输入用户名");
 		Utils.checkNull(password, "请输入密码");
+		Utils.checkNull(vcode, "请输入验证码");
 		
-		User dbuser = new User();
-		dbuser = udao.selectByName(username);
-		if(dbuser == null) {
+		User user = new User();
+		user = udao.selectByName(username);
+		if(user == null) {
 			throw new BizException("请检查用户名是否正确");
 		}
 	
-		if( !dbuser.getPassword().equals(password)  ) {
+		if( !user.getPassword().equals(password)  ) {
 			throw new BizException("密码错误");
 		}
-		@SuppressWarnings("null")
 		String svcode = (String) session.getAttribute("vcode");
-		if(!vcode.equalsIgnoreCase(svcode)) {
+		if( !vcode.equalsIgnoreCase(svcode)) {
 			throw new BizException("验证码错误");
 		}
-		return dbuser;
+		return user;
 	}
 	
 }

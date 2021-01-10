@@ -75,7 +75,7 @@ public class UserDao extends BaseDao {
 		}
 	}
 	
-	public String queryName(String name) throws SQLException {
+	public String queryName(String name) {
 		String loginname =  name;
 		return loginname;
 	}

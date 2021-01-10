@@ -28,4 +28,9 @@ public class CategorySecond implements Serializable {
 		this.cid = cid;
 	}
 	
+	@Override
+	public String toString() {
+		return "CategorySecond [csid=" + csid + ", csname=" + csname + ", cid=" + cid + "]";
+	}
+	
 }

@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.yc.damai.po.Cart;
 import com.yc.damai.po.Product;
 
 @Repository
@@ -62,18 +61,22 @@ public class ProductDao extends BaseDao {
 	 * @param cid
 	 * @return
 	 */
-	public List<Product> queryByCid(int cid){
+	public List<Product> queryByCid(int cid) {
 		String sql = "select a.* from product a, categorysecond b where a.csid = b.csid and b.cid = ?";
 		return jt.query(sql, pm, cid);
 	}
 	
-	public List<Product> queryByCsid(int csid){
+	public List<Product> queryByCsid(int csid) {
 		String sql = "select * from product where csid = ?";
 		return jt.query(sql, pm, csid);
 	}
 	
-	public void insert(Product product) throws SQLException{
-		String sql = "insert into product values (null, ?, ?, ?, ?, ?, ?, default, ?)";
+	/**
+	 * 新增商品
+	 * @param p
+	 */
+	public void insert(Product product) {
+		String sql = "insert into product values (null, ?, ?, ?, ?, ?, ?, now(), ?)";
 		jt.update(sql, product.getPname(), product.getMarketPrice(),
 				product.getShopPrice(), product.getImage(), product.getPdesc(),
 				product.getIsHot(),product.getCsid());

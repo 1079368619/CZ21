@@ -111,7 +111,7 @@
 									<td>
 										<span class="fieldSet">
 											<input v-model="vcode" type="text" class="text captcha" maxlength="4" autocomplete="off">
-											<img style="width:100px;" src="VerifyCodeServlet" onclick="this.src='VerifyCodeServlet?a=' + new Date(); time=60" id="captchaImage" class="captchaImage" title="点击更换验证码" onclick="checkImg()">
+											<img style="width:100px;" :src="imgsrc" title="点击更换验证码" @click="checkImg()">
 										</span><!--  src="images/vcode.jpg" -->
 										<span id="timer"></span>
 									</td>
@@ -130,7 +130,7 @@
 							<tr>
 								<th>&nbsp;</th>
 								<td>
-									<input @click="login" type="button" class="submit" value="登 录">
+									<input @click="login()" type="button" class="submit" value="登 录">
 								</td>
 							</tr>
 							<tr class="register">
@@ -165,16 +165,19 @@
 							username : "",
 							password : "",
 							vcode : "",
-							loginedUser : {}
+							loginedUser : {},
+							imgsrc:"verifyCode.s?a="
 						},
 						methods : {
+							checkImg(){
+								this.imgsrc += new Date();
+							},
 							login(){
 								var params = new URLSearchParams();
 		            			params.append("username",this.username);
 		            			params.append("password",this.password);
 		            			params.append("vcode",this.vcode);
-		            			params.append("op","login");
-		            			axios.post("user.s", params).then(res=>{
+		            			axios.post("login.s", params).then(res=>{
 		            				alert(res.data.msg);
 		            				//后续操作： 如果成功，跳转首页；如果失败，显示报错信息
 		            				if(res.data.code == 1){

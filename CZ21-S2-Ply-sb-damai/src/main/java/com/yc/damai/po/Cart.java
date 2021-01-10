@@ -37,4 +37,9 @@ public class Cart implements Serializable {
 		this.count = count;
 	}
 	
+	@Override
+	public String toString() {
+		return "Cart [ciid=" + ciid + ", uid=" + uid + ", pid=" + pid + ", count=" + count + "]";
+	}
+	
 }

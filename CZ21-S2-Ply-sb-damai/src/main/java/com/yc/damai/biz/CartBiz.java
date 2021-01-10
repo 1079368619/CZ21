@@ -2,12 +2,18 @@ package com.yc.damai.biz;
 
 import java.sql.SQLException;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
 import com.yc.damai.dao.CartDao;
 import com.yc.damai.po.Cart;
 
+@Service
 public class CartBiz {
 
-	private CartDao cdao = new CartDao();
+	@Resource
+	private CartDao cdao;
 	
 	public void addCart(Cart cart) throws SQLException{
 		/*String sql = "update cart set count=count+? where uid = ? and pid = ?";

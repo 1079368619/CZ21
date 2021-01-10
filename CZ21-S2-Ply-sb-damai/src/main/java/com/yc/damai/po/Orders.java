@@ -64,4 +64,10 @@ public class Orders implements Serializable {
 		this.name = name;
 	}
 	
+	@Override
+	public String toString() {
+		return "Orders [oid=" + oid + ", total=" + total + ", ordertime=" + ordertime + ", state=" + state + ", addr="
+				+ addr + ", phone=" + phone + ", uid=" + uid + ", name=" + name + "]";
+	}
+	
 }

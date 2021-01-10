@@ -21,5 +21,9 @@ public class Category implements Serializable {
 	public void setCname(String cname) {
 		this.cname = cname;
 	}
+	@Override
+	public String toString() {
+		return "Category [cid=" + cid + ", cname=" + cname + "]";
+	}
 	
 }
