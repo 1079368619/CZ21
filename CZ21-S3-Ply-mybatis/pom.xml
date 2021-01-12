@@ -13,6 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   	</properties>
+  	
   	<dependencies>
 		<dependency>
     		<groupId>org.mybatis</groupId>
@@ -23,7 +24,7 @@
 		<dependency>
     		<groupId>mysql</groupId>
     		<artifactId>mysql-connector-java</artifactId>
-    		<version>5.1.47</version>
+    		<version>5.1.47</version><!-- $NO-MVN-MAN-VER$ -->
     		<scope>runtime</scope>
 		</dependency>
 		
