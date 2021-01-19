@@ -8,4 +8,6 @@ public interface TagFavoriteMapper {
 	@Insert("insert into tagfavorite values (#{tid}, #{fid})")
 	int insert(@Param("tid")Integer tid, @Param("fid")Integer fid);
 
+	int countByfid(int fid);
+
 }

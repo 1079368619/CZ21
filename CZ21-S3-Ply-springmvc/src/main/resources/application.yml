@@ -1,0 +1,30 @@
+server:
+  port: 80
+
+
+spring:
+   datasource:
+      driverClassName: com.mysql.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1/CZ21-S3-Ply-mybatis
+      username: root
+      password: a
+   web:
+      resources:
+         static-locations:
+            - classpath:/META-INF/resources/
+            - classpath:/resources/
+            - classpath:/static/
+            - classpath:/public/
+            - file:/f:/jsj
+   serlvet:
+      multipart:
+         maxFileSize: 1000000
+
+mybatis:
+   configuration:
+      mapUnderscoreToCamelCase: true
+
+logging:
+   level:
+      com:
+         yc: debug

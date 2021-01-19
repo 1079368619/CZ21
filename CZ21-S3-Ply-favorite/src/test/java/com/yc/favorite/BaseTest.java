@@ -10,6 +10,7 @@ import com.yc.favorite.bean.Favorite;
 import com.yc.favorite.bean.Tag;
 import com.yc.favorite.biz.FavoriteBiz;
 import com.yc.favorite.dao.FavoriteMapper;
+import com.yc.favorite.dao.TagFavoriteMapper;
 import com.yc.favorite.dao.TagMapper;
 
 @SpringBootTest
@@ -20,6 +21,9 @@ public class BaseTest {
 	
 	@Resource
 	private FavoriteMapper fm;
+	
+	@Resource
+	private TagFavoriteMapper tfm;
 	
 	@Resource
 	private FavoriteBiz fbiz;
@@ -62,4 +66,19 @@ public class BaseTest {
 		
 	}
 
+	@Test  // 测试驱动开发
+	public void testAddFavoriteForNotTag() {
+		Favorite f = new Favorite();
+		f.setFlabel("淘宝");
+		f.setFurl("www.taobao.com");
+		f.setFdesc("知名购物网站");
+		f.setFtags("购物，视频，娱乐");
+		
+		fbiz.addFavorite(f);
+		
+		int fid = f.getFid();
+		
+		int count = tfm.countByfid(fid);
+		Assert.isTrue(count == 0, "关系表中应该没有该fid");
+	}
 }

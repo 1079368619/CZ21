@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
   <head>
-    
-    <title>ËÑ²Ø</title>
+    <meta charset="UTF-8">
+    <title>æœè—</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -25,107 +25,83 @@
       <input type="hidden" name="op" value="toList" />
     
     <div class="banner" valign="top">
-    	 ËÑ²Ø
+    	 æœè—
     </div>
       
-	<table cellspacing="0" cellpadding="0" border="0">
+	<table id="main" cellspacing="0" cellpadding="0" border="0">
 		<tr>
 			<td style="text-align:right;" valign="top">
-			<!-- ×ó±ßTagÁĞ±í -->
+			<!-- å·¦è¾¹Tagåˆ—è¡¨ -->
 				<div class="left_labels" >
 				 
 				
 				<table class="labels_table" cellspacing="0" cellpadding="0" border="0">
-					<tr><td><a href="#" onclick="add();" style="font-weight:bold;">Ìí¼ÓÊéÇ©</a></td></tr>
+					<tr><td><a href="#" onclick="add();" style="font-weight:bold;">æ·»åŠ ä¹¦ç­¾</a></td></tr>
 					<tr>
 						<td class="selected_label">
-							<a href="fav.do?op=toList&type=-1">È«²¿</a>
+							<a href="fav.do?op=toList&type=-1">å…¨éƒ¨</a>
 						</td>
 					</tr>
 					<tr>
 						<td >
-							<a href="fav.do?op=toList&type=0">Î´·ÖÀà</a>
+							<a href="fav.do?op=toList&type=0">æœªåˆ†ç±»</a>
 						</td>
 					</tr>
 						
-					<tr v-for="t in tlist"><td><a href="#">{{t.tname}}</a></td></tr>
+					<tr v-for="t in tlist"><td><a href="#" @click.prevent="choose(t.tid)">{{t.tname}}</a></td></tr>
 						
 					<tr>
 						<td>
-							<a style="font-weight:bold;" href="fav.do?op=toCloud">ÔÆÍ¼</a>
+							<a style="font-weight:bold;" href="fav.do?op=toCloud">äº‘å›¾</a>
 						</td>
 					</tr>
 				</table>
 				</div>
-				<script type="text/javascript">
-					var v1 = new Vue({
-						el : ".left_labels",
-						data : { tlist : [] } ,
-						created : function(){
-							axios.get("queryAllTag.do").then(res=>{
-								this.tlist = res.data;
-							});
-						}
-					})
-				</script>
+				
 			</td>
 			<td>
-			<!-- ÓÒ±ßfavÄÚÈİ -->
+			<!-- å³è¾¹favå†…å®¹ -->
 				<div class="content_links">
 				
-				<div style="padding:6px 10px;">	
+				<div style="padding:6px 10px;"  v-for="f in flist">	
 					<div>
-						<a href="http://www.apache.org/struts/" style="color:blue;font-size:18px;" target="_blank">Apache Struts</a>
+						<a :href="'http://' + f.furl" style="color:blue;font-size:18px;" target="_blank">{{f.flabel}}</a>
 					</div>
 					<div style="color:black;font-size:16px;">	
-						Struts¹Ù·½Õ¾µã
+						{{f.fdesc}}
 					</div>
 					<div style="color:green;font-size:14px;">
-						http://www.apache.org/struts/
+						http://{{f.furl}}
 					</div>
-				</div>	
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.sougaou.com" style="color:blue;font-size:18px;" target="_blank">ËÑ¹·</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						aa
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.sougaou.com
-					</div>
-				</div>	
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.sina.com" style="color:blue;font-size:18px;" target="_blank">ĞÂÀË</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						¹úÄÚÍâÖøÃûÃÅ»§ÍøÕ¾
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.sina.com
-					</div>
-				</div>	
-				
-				<div style="padding:6px 10px;">	
-					<div>
-						<a href="http://www.taobao.com" style="color:blue;font-size:18px;" target="_blank">ÌÔ±¦</a>
-					</div>
-					<div style="color:black;font-size:16px;">	
-						ÕâÊÇÒ»¸öºÃÍøÕ¾ÔÚ¡£¡£
-					</div>
-					<div style="color:green;font-size:14px;">
-						http://www.taobao.com
-					</div>
-				</div>	
-				
+				</div>
 				</div>
 			</td>
 		</tr>
 	</table> 
-	
+	<script type="text/javascript">
+	var v1 = new Vue({
+		el : "#main",
+		data : { 
+			tlist : [],
+			flist : []
+		},
+		created : function(){
+			axios.get("queryAllTag.do").then(res=>{
+				this.tlist = res.data;
+			});
+			axios.get("queryAllFavorite.do").then(res=>{
+				this.flist = res.data;
+			});
+		},
+		methods:{
+			choose(tid){
+				axios.get("queryFavoriteByTid.do?tid=" + tid).then(res=>{
+					this.flist = res.data.favorites;
+				});
+			}
+		}
+	})
+	</script>
     </form>
   </body>
 </html>

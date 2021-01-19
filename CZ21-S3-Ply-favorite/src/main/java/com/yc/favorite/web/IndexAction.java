@@ -10,14 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yc.favorite.bean.Favorite;
 import com.yc.favorite.bean.Tag;
 import com.yc.favorite.biz.FavoriteBiz;
+import com.yc.favorite.dao.FavoriteMapper;
 import com.yc.favorite.dao.TagMapper;
 
 @RestController
 public class IndexAction {
 	
-	@Resource private TagMapper tm;
+	@Resource 
+	private TagMapper tm;
 	
-	@Resource private FavoriteBiz fbiz;
+	@Resource
+	private FavoriteMapper fm;
+	
+	@Resource 
+	private FavoriteBiz fbiz;
 
 	@RequestMapping("hello")
 	public String hello() {
@@ -40,4 +46,18 @@ public class IndexAction {
 		return tm.selectAll();
 	}
 	
+	@RequestMapping("queryAllFavorite.do")
+	public List<Favorite> queryAllFavorite(){
+		return fm.selectAll();
+	}
+	
+	@RequestMapping("queryFavoriteByTid.do")
+	public Tag queryFavoriteByTid(int tid){
+		return tm.queryFavoriteByTid(tid);
+	}
+	
+	@RequestMapping("queryNotTag.do")
+	public List<Favorite> queryNotTag(){
+		return null;
+	}
 }

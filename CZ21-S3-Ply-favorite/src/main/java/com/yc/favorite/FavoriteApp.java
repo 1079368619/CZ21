@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan("com.yc.favorite.dao")
 @EnableTransactionManagement  // 开启事务的注解
 public class FavoriteApp {
+	
 	public static void main(String[] args) {
 		SpringApplication.run(FavoriteApp.class, args);
 	}

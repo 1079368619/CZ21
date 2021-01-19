@@ -39,7 +39,12 @@ public class FavoriteBiz {
 		 * 4. 向 tagfavorite 添加记录（获取到tid和fid）
 		 */
 		fm.insert(f);
-		String[] tags = f.getFtags().split("[,;：，;:]");
+		String[] tags = null;
+		if(f.getFtags()==null || f.getFtags().trim().isEmpty()) {
+			tags = new String[0];
+		}else {
+			tags = f.getFtags().split("[,;：，;:]");
+		}
 		for(String tag : tags) {
 			Tag t = new Tag();
 			if( tm.updateCountByName(tag) == 0) {
@@ -47,7 +52,7 @@ public class FavoriteBiz {
 				t.setTcount(1L);
 				tm.insert(t);
 			} else {
-				// 否则是tag已经存在，并且数量已经更新完成， 通过tag【tname】获取到t对象
+				// 否则是tag已经存在，并且数量已经更新完成， 通过tag[tname]获取到t对象
 				t = tm.selectByName(tag);
 			}
 			tfm.insert(t.getTid(), f.getFid());

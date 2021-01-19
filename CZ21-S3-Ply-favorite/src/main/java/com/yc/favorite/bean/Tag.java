@@ -1,14 +1,22 @@
 package com.yc.favorite.bean;
 
+import java.util.List;
+
 import lombok.Data;
 
-@Data  // 自动的生成 get set toString 方法
+@Data 
 public class Tag implements java.io.Serializable{
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Integer tid;
+	
 	private String tname;
+	
 	private Long tcount;
+	
+	private List<Favorite> favorites;
+	
 	public Integer getTid() {
 		return tid;
 	}
