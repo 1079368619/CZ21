@@ -43,6 +43,17 @@ public class JsjUser implements java.io.Serializable{
 		this.fans = fans;
 	}
 
+	/**
+	 * 	用户所属学校
+	 */
+	private JsjSchool schoolObj;
+	public JsjSchool getSchoolObj() {
+		return schoolObj;
+	}
+
+	public void setSchoolObj(JsjSchool schoolObj) {
+		this.schoolObj = schoolObj;
+	}
 
 	private Integer id;
 
@@ -266,4 +277,15 @@ public class JsjUser implements java.io.Serializable{
         this.lastLoginTime = lastLoginTime;
     }
 
+	@Override
+	public String toString() {
+		return "JsjUser [books=" + books + ", fans=" + fans + ", id=" + id + ", account=" + account + ", name=" + name
+				+ ", pwd=" + pwd + ", inviteId=" + inviteId + ", headImg=" + headImg + ", phone=" + phone + ", email="
+				+ email + ", school=" + school + ", gender=" + gender + ", sign=" + sign + ", collectType="
+				+ collectType + ", collectAccount=" + collectAccount + ", collectName=" + collectName + ", addrName="
+				+ addrName + ", addrPhone=" + addrPhone + ", addrPost=" + addrPost + ", addrProvince=" + addrProvince
+				+ ", addrDesc=" + addrDesc + ", regTime=" + regTime + ", lastLoginTime=" + lastLoginTime + "]";
+	}
+
+    
 }

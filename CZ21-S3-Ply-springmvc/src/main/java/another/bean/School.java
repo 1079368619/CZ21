@@ -1,4 +1,4 @@
-package com.yc.mvc.bean;
+package another.bean;
 
 public class School {
 

@@ -2,31 +2,24 @@ package com.yc.mvc.web;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.apache.tomcat.jni.Error;
-import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.yc.mvc.biz.BizException;
 import com.yc.mvc.biz.UserBiz;
+import com.yc.mvc.dao.UserMapper;
 import com.yc.mvc.po.JsjUser;
 import com.yc.mvc.po.Result;
 
@@ -36,6 +29,9 @@ public class UserAction {
 	@Resource
 	private UserBiz ubiz;
 
+	@Resource
+	private UserMapper um; 
+	
 	@PostMapping("login.do")
 	public Result login(JsjUser user, HttpSession session) {
 		JsjUser dbuser;
@@ -88,6 +84,16 @@ public class UserAction {
 		loginedUser.setHeadImg(webpath);
 		ubiz.updataHeadImg(loginedUser);
 		return Result.success("文件上传成功！", webpath);
-		
 	}
+	
+	@RequestMapping("queryLastLoginUsers.do")
+	public List<JsjUser> queryLastLoginUsers() {
+		return um.queryLastLoginUsers();
+	}
+	
+	@RequestMapping("queryregTimeUsers.do")
+	public List<JsjUser> queryregTimeUsers() {
+		return um.queryregTimeUsers();
+	}
+	
 }

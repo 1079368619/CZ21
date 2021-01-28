@@ -1,7 +1,6 @@
 package com.yc.mvc.biz;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
 
 import org.springframework.stereotype.Service;
 

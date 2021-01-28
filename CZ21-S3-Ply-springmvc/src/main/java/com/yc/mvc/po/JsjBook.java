@@ -169,4 +169,14 @@ public class JsjBook implements java.io.Serializable{
     public void setIntro(String intro) {
         this.intro = intro == null ? null : intro.trim();
     }
+
+	@Override
+	public String toString() {
+		return "JsjBook [user=" + user + ", id=" + id + ", name=" + name + ", author=" + author + ", press=" + press
+				+ ", isbn=" + isbn + ", pic=" + pic + ", category=" + category + ", price=" + price + ", markPrice="
+				+ markPrice + ", discount=" + discount + ", oldnew=" + oldnew + ", ownerId=" + ownerId + ", upTime="
+				+ upTime + ", state=" + state + ", intro=" + intro + "]";
+	}
+    
+    
 }

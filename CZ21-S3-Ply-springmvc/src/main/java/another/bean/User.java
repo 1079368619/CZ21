@@ -1,4 +1,4 @@
-package com.yc.mvc.bean;
+package another.bean;
 
 import java.sql.Date;
 import java.util.Arrays;

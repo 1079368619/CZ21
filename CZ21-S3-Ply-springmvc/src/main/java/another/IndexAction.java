@@ -1,4 +1,4 @@
-package com.yc.mvc.web;
+package another;
 
 import java.io.InputStream;
 import java.sql.Date;

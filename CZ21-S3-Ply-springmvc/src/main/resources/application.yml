@@ -4,12 +4,16 @@ server:
 
 spring:
    datasource:
+      # yml 支持驼峰命名 + -号分隔符
       driverClassName: com.mysql.jdbc.Driver
       url: jdbc:mysql://127.0.0.1/CZ21-S3-Ply-mybatis
       username: root
+      # 配置项之间可以有空行
       password: a
    web:
       resources:
+         # staticLocations == static-locations
+         # yml 数组类型配置,  file: 表示从磁盘路径读取 ， classpath: 类路径
          static-locations:
             - classpath:/META-INF/resources/
             - classpath:/resources/
@@ -18,13 +22,17 @@ spring:
             - file:/f:/jsj
    serlvet:
       multipart:
+         # 配置文件上传大小限制
          maxFileSize: 1000000
+   jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+      time-zone: GMT+8
 
 mybatis:
    configuration:
+      # 开启驼峰命名映射
       mapUnderscoreToCamelCase: true
 
 logging:
    level:
-      com:
-         yc: debug
+      com.yc: debug
