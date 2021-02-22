@@ -1,0 +1,16 @@
+server:
+   port: 9000
+
+spring:
+   application:
+      name: cloud-config
+   cloud:
+      config:
+         server:
+            git:
+      
+eureka:
+   client:
+      serviceUrl:
+         defaultZone: http://127.0.0.1:8000/eureka
+

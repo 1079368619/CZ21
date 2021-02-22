@@ -1,0 +1,8 @@
+   
+spring:
+   application:
+      name: sq-index
+   cloud:
+      config:
+         uri: https://localhost:9000
+         label: main

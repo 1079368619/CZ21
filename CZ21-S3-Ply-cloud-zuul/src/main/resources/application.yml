@@ -14,6 +14,7 @@ eureka:
 
 #简单路由配置
 zuul:
+   sensitiveHeaders:
    rotes:
       simple:
           #    请求的地址
@@ -21,6 +22,21 @@ zuul:
          #    跳转的地址，简单路由在配置path的时候是以“http”或“https”开头的。
          url: http://www.163.com
       myForward:
-         path: /user/**
+         path: /us/**
          url: forward:/cloud-user
+      users:
+         path: /users/**
+         serviceId: cloud-user
          
+         #sensitiveHeaders:
+      cloud-order:
+         path: /orders/**
+      #cloud-order:
+      #   path: /cloud-order/**
+      #cloud-user:
+      #   path: /cloud-user/**
+      
+      
+      default:
+         path: /**
+         url: https://taobao.com
