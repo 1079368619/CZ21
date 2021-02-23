@@ -1,0 +1,8 @@
+   
+spring:
+   application:
+      name: sq-music
+   cloud:
+      config:
+         uri: https://localhost:9000
+         label: main
