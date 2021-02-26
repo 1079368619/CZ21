@@ -52,6 +52,11 @@
 			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
 		</dependency>
 		
+		<dependency>
+			<groupId>com.yc</groupId>
+			<artifactId>CZ21-S3-Ply-sq-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<!-- SpringCloud 工程有自己的依赖管理器 -->

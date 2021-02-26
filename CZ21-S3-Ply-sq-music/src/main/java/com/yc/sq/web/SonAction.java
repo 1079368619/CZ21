@@ -7,6 +7,10 @@ import javax.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.pagehelper.PageHelper;
+import com.yc.sq.bean.SqSongExample;
+import com.yc.sq.dao.SqSongMapper;
+
 @RestController
 public class SonAction {
 

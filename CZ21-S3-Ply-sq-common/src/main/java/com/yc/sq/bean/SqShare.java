@@ -1,6 +1,11 @@
 package com.yc.sq.bean;
 
-public class SqShare {
+import java.io.Serializable;
+
+public class SqShare implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
     private Integer id;
 
     private String name;

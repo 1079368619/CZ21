@@ -4,5 +4,5 @@ spring:
       name: sq-user
    cloud:
       config:
-         uri: https://localhost:9000
+         uri: http://localhost:9000
          label: main
